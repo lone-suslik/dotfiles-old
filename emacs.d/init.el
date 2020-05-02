@@ -7,7 +7,6 @@
 
 ;; INSTALL PACKAGES
 ;; -----------------------------------
-
 (require 'package)
 
 (setq-default left-margin-width  3)
@@ -22,6 +21,9 @@
 
 
 (keyboard-translate ?\C-h ?\C-?) ;; some basic keyboard stuff, don't remove (written by Petr on 24 of June, 2019)
+
+;; fonts
+(set-frame-font "Hasklug Nerd Font Mono 12")
 
 ;; fix line numbers
 (global-linum-mode t)
@@ -93,7 +95,7 @@
  '(custom-enabled-themes (quote (dracula)))
  '(custom-safe-themes
    (quote
-    ("a41b81af6336bd822137d4341f7e16495a49b06c180d6a6417bf9fd1001b6d2b" default)))
+    ("13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" "a41b81af6336bd822137d4341f7e16495a49b06c180d6a6417bf9fd1001b6d2b" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote

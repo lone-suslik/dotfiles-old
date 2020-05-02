@@ -1,0 +1,1 @@
+/home/suslik/Documents/Dotfiles/emacs.d
