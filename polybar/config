@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #50d3003f
+background =  #282a36
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -30,7 +30,7 @@ alert = #bd2c40
 [bar/main]
 
 width = 100%
-height = 27
+height = 35
 
 radius = 0
 fixed-center = false
@@ -45,22 +45,21 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 0
-padding-right = 0
+padding-left = 1
+padding-right = 1
 
-module-margin-left = 1
-module-margin-right = 2
 
-font-0 = fixed:pixelsize=10
-font-1 = unifont:fontformat=truetype:size=8:antialias=false
-font-2 = siji:pixelsize=10
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = "Hasklug Nerd Font Mono:style=Bold;4"
 
 modules-left = i3
 modules-center = date
 ;modules-right =  date 
 
 tray-position = right
-tray-padding = 2
+;tray-padding = 2
 
 
 cursor-click = pointer
@@ -75,7 +74,7 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-label-mode-padding = 2
+;label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
@@ -90,7 +89,7 @@ label-unfocused = %index%
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %index%
+label-visible = %index%ppp
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
@@ -101,13 +100,14 @@ label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
 ; Separator in between workspaces
-; label-separator = |
+;label-separator = 
+label-separator = 
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
-date = %d-%m-%Y
+date = %B, %d
 
 time = %H:%M:%S
 
@@ -115,7 +115,7 @@ time = %H:%M:%S
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
-label = %date% %time%
+label =  "%date% [%time%]"
 
 [settings]
 screenchange-reload = true
@@ -123,10 +123,10 @@ screenchange-reload = true
 ;compositing-background = screen
 ;compositing-foreground = source
 ;compositing-border = over
-pseudo-transparency = true
+pseudo-transparency = true 
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 10
+margin-bottom = 10
 
 ; vim:ft=dosini
