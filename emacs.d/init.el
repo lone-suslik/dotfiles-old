@@ -1,38 +1,57 @@
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
 ;; INSTALL PACKAGES
 ;; -----------------------------------
+
 (require 'package)
 
-(setq-default left-margin-width  3)
-(setq-default right-margin-width  3)
-
 (add-to-list 'package-archives
-       '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://stable.melpa.org/packages/") t)
+
 
 (package-initialize)
 (when (not package-archive-contents)
-  (package-refresh-contents))
+(package-refresh-contents))
 
 
 (keyboard-translate ?\C-h ?\C-?) ;; some basic keyboard stuff, don't remove (written by Petr on 24 of June, 2019)
-
-;; fonts
-(set-frame-font "Hasklug Nerd Font Mono 12")
 
 ;; fix line numbers
 (global-linum-mode t)
 (setq linum-format "%4d  ")
 
-;; turn of the toolbar & menubar
-(tool-bar-mode -1)
+;; removes *messages* from the buffer
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
+
+;; Removes *Completions* from buffer
+(add-hook 'minibuffer-exit-hook
+	  '(lambda ()
+	     (let ((buffer "*Completions*"))
+	       (and (get-buffer buffer)
+		    (kill-buffer buffer)))))
+
+;;;
+(global-set-key (kbd "M-o") 'ace-window)
+
+;; ---------------------
+;; ------ Extension to mode mapping
+;; ---------------------
+(add-to-list 'auto-mode-alist '("\\.sf\\'" . snakemake-mode))
+
+;; ---------------------
+;; ------ Remove top bar
+;; ---------------------
+(add-to-list 'default-frame-alist
+	     '(font . "Hasklug NF-17"))
+
+;;"DejaVuSansMono NF-15"
+
+;; ---------------------
+;; ------ Remove top bar
+;; ---------------------
 (menu-bar-mode -1)
-(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+;;(toggle-scroll-bar -1)
+
 ;; ---------------------
 ;; ------ EMACS Backups
 ;; --------------------
@@ -54,13 +73,14 @@
 (require 'org-inlinetask)
 (setq org-log-done t)
 (setq org-agenda-files (list ""))
-(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(0)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c C-w") 'org-refile-targets)
-
+;;(global-set-key (kbd "S-
 
 (setq org-refile-targets '(("~/Documents/Org/todo.org" :maxlevel . 3)
                            ("~/Documents/Org/someday.org" :level . 1)
+                           ("~/Documents/Org/tickler.org" :maxlevel . 2)
 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
 
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
@@ -69,10 +89,43 @@
                               ("T" "Tickler" entry
                                (file+headline "~/Documents/Org/tickler.org" "Tickler")
                                "* %i%? \n %U")))
+
+;; ---------------------
+;; --------- Helm ------
+;; ---------------------
+(require 'helm)
+(require 'helm-config)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+
+
+;; ---------------------
+;; ---- Projectile -----
+;; ---------------------
+(require 'projectile)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-mode +1)
+
+
+;; ---------------------
+;; --------- R ---------
+;; ---------------------
+(require 'ess-site)
+
+(add-hook 'ess-mode-hook
+	  (lambda ()
+	    (setq-local split-width-threshold 0)
+	    (ess-set-style 'RStudio)
+	    (ess-toggle-underscore nil)
+	    (setq ess-ask-for-ess-directory nil)
+	    (define-key ess-mode-map (kbd "C-j") 'ess-eval-region-or-line-and-step)))
+;; (define-key ess-r-mode-map(kbd "C-j") ')
+
 ;; ---------------------
 ;; ------ PYTHON -------
 ;; ---------------------
 
+;; enable elpy
 (elpy-enable)
 
 (when (require 'flycheck nil t)
@@ -82,11 +135,57 @@
 
 :init (global-flycheck-mode)
 
-;;; ------ THEMING -------
+;; ;;; ------ THEMING -------
+;; (unless (display-graphic-p) (load-theme 'manoj-dark))
 
-
-
-;;; ------ CUSTOM --------
+;; ;;; ------ CUSTOM --------
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(ansi-color-faces-vector
+;;    [default bold shadow italic underline bold bold-italic bold])
+;;  '(ansi-color-names-vector
+;;    (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#262626"))
+;;  '(custom-safe-themes
+;;    (quote
+;;     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+;;  '(fci-rule-color "#3a3a3a")
+;;  '(flycheck-checker-error-threshold 800)
+;;  '(hl-sexp-background-color "#121212")
+;;  '(package-selected-packages
+;;    (quote
+;;     (julia-mode haskell-mode sicp telega gitignore-mode markdown-mode ## monokai-theme spacemacs-theme snakemake-mode color-theme yaml-mode groovy-mode py-autopep8 flycheck elpy ess material-theme better-defaults)))
+;;  '(vc-annotate-background nil)
+;;  '(vc-annotate-color-map
+;;    (quote
+;;     ((20 . "#f36c60")
+;;      (40 . "#ff9800")
+;;      (60 . "#fff59d")
+;;      (80 . "#8bc34a")
+;;      (100 . "#81d4fa")
+;;      (120 . "#4dd0e1")
+;;      (140 . "#b39ddb")
+;;      (160 . "#f36c60")
+;;      (180 . "#ff9800")
+;;      (200 . "#fff59d")
+;;      (220 . "#8bc34a")
+;;      (240 . "#81d4fa")
+;;      (260 . "#4dd0e1")
+;;      (280 . "#b39ddb")
+;;      (300 . "#f36c60")
+;;      (320 . "#ff9800")
+;;      (340 . "#fff59d")
+;;      (360 . "#8bc34a"))))
+;;  '(vc-annotate-very-old-color nil))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
+(put 'downcase-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -95,11 +194,10 @@
  '(custom-enabled-themes (quote (dracula)))
  '(custom-safe-themes
    (quote
-    ("13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" "a41b81af6336bd822137d4341f7e16495a49b06c180d6a6417bf9fd1001b6d2b" default)))
- '(inhibit-startup-screen t)
+    ("fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
  '(package-selected-packages
    (quote
-    (fish-mode dracula-theme dockerfile-mode yaml-mode snakemake-mode flycheck ess-smart-equals ess-smart-underscore ess elpy))))
+    (ace-window projectile helm groovy-mode poly-R poly-markdown polymode ess yaml-mode fish-mode snakemake-mode dracula-theme visual-fill-column sicp markdown-mode haskell-mode gitignore-mode flycheck elpy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
