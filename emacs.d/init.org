@@ -1,5 +1,5 @@
-+STARTUP: fold
-+TAGS: { enabled(e) disabled(d) } refine(r)
+#+STARTUP: fold
+#+TAGS: { enabled(e) disabled(d) } refine(r)
 * emacs
 ** package refresh contents
 #+begin_src emacs-lisp
@@ -63,6 +63,10 @@
 
 #+end_src
 
+** follow symlinks
+#+begin_src emacs-lisp
+  (setq vc-follow-symlinks nil)
+#+end_src
 ** remove messages buffer
 #+begin_src emacs-lisp
 
@@ -225,14 +229,14 @@
   (use-package company
     :after lsp-mode
     :hook (lsp-mode . company-mode))
-
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0) ;; default is 0.2
 
-  ;; (global-set-key (kbd "<tab>") #'company-indent-or-complete-common) - this thing breaks autocompletion
+    ;; ;;
+    ;; (global-set-key (kbd "<tab>") #'company-indent-or-complete-common) - this thing breaks autocompletion
 
   ;; (use-package company-box
-  ;; :hook (company-mode . company-box-mode))
+  ;;   :hook (company-mode . company-box-mode))
 #+end_src
 * ivy
 #+begin_src emacs-lisp
@@ -271,25 +275,29 @@
 * lsp-mode                                                   :enabled:refine:
 #+begin_src emacs-lisp
 
-  ;; -----------------------
-  ;; ------- LSP-mode ------
-  ;; -----------------------
+    ;; -----------------------
+    ;; ------- LSP-mode ------
+    ;; -----------------------
+    (require 'lsp-mode)
 
-  (use-package lsp-mode
-    :diminish LSP " λσπ"
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    (setq lsp-headerline-breadcrumb-mode '(project file symbols)))
+    (use-package lsp-mode
+      :diminish LSP " λσπ"
+      :init
+      (setq lsp-keymap-prefix "C-c l")
+      (setq lsp-headerline-breadcrumb-mode '(project file symbols))
+      :config
+      (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+      :hook ((lsp-mode . lsp-enable-which-key-integration)))
 
-  (use-package lsp-ui
-    :config
-    (setq lsp-ui-sideline-show-hover t)
-    (setq lsp-ui-sideline-show-diagnostics t)
-    (setq lsp-ui-doc-enable t))
+    (use-package lsp-ui
+      :config
+      (setq lsp-ui-sideline-show-hover t)
+      (setq lsp-ui-sideline-show-diagnostics t)
+      (setq lsp-ui-doc-enable t))
 
-  (use-package lsp-jedi
-    :ensure t
-    :hook (python-mode . (lambda ()
+    (use-package lsp-jedi
+      :ensure t
+      :hook (python-mode . (lambda ()
 			   (require 'lsp-jedi)
 			   (lsp))))
 
@@ -307,7 +315,7 @@
     ;; set prefix for lsp-command-keymap
     (setq lsp-keymap-prefix "C-c l")
     (setq lsp-headerline-breadcrumb-mode '(project file symbols)))
-  ;; (add-hook 'ess-mode-hook #'lsp)
+
   ;; (add-hook 'lsp-mode-hook #'enable-which-key-integration) ;; I am too dumb to add this to use-package (get weird errors)
 
 
@@ -336,42 +344,42 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
   
 #+end_src
 * mu4e                                                       :enabled:refine:
-#+begin_src emacs-lisp
+# #+begin_src emacs-lisp
 
-  ;; ---------------------
-  ;; -------- mu4e--------
-  ;; ---------------------
-  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-  (use-package mu4e
-    :config
-    ;; Update mail using 'U' in main view:
-    (setq mu4e-root-maildir "~/.mail")
-    (setq mu4e-get-mail-command "offlineimap")
-    (setq mu4e-view-show-addresses t)
-    (setq mu4e-attachment-dir (expand-file-name "~/Downloads/"))
-    (setq mu4e-maildir "~/.mail")
-    (setq mu4e-html2text-command "w3m -T text/html") ;; alternatively "textutil -stdin -format html -convert txt -stdout"
-    (setq mu4e-context-policy 'pick-first)
-    (setq mu4e-compose-context-policy 'always-ask)
-  (setq mu4e-contexts
-	  (list
-	   (make-mu4e-context
-	    :name "protonmail"
-	    :enter-func (lambda () (mu4e-message "Entering context petr.volkov@protonmail.com"))
-	    :leave-func (lambda () (mu4e-message "Leaving context petr.volkov@protonmail.com"))
-	    :match-func (lambda (msg)
-			  (when msg
-			    (mu4e-message-contact-field-matches
-			     msg '(:from :to :cc :bcc) "petr.volkov@protonmail.com")))
-	    :vars '((user-mail-address . "petr.volkov@protonmail.com")
-		    (user-full-name . "Petr")
-		    (mu4e-sent-folder . "/Sent")
-		    (mu4e-drafts-folder . "/Drafts")
-		    (mu4e-trash-folder . "/Trash")))
-	   )
-	  ))
+#   ;; ---------------------
+#   ;; -------- mu4e--------
+#   ;; ---------------------
+#   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+#   (use-package mu4e
+#     :config
+#     ;; Update mail using 'U' in main view:
+#     (setq mu4e-root-maildir "~/.mail")
+#     (setq mu4e-get-mail-command "offlineimap")
+#     (setq mu4e-view-show-addresses t)
+#     (setq mu4e-attachment-dir (expand-file-name "~/Downloads/"))
+#     (setq mu4e-maildir "~/.mail")
+#     (setq mu4e-html2text-command "w3m -T text/html") ;; alternatively "textutil -stdin -format html -convert txt -stdout"
+#     (setq mu4e-context-policy 'pick-first)
+#     (setq mu4e-compose-context-policy 'always-ask)
+#   (setq mu4e-contexts
+# 	  (list
+# 	   (make-mu4e-context
+# 	    :name "protonmail"
+# 	    :enter-func (lambda () (mu4e-message "Entering context petr.volkov@protonmail.com"))
+# 	    :leave-func (lambda () (mu4e-message "Leaving context petr.volkov@protonmail.com"))
+# 	    :match-func (lambda (msg)
+# 			  (when msg
+# 			    (mu4e-message-contact-field-matches
+# 			     msg '(:from :to :cc :bcc) "petr.volkov@protonmail.com")))
+# 	    :vars '((user-mail-address . "petr.volkov@protonmail.com")
+# 		    (user-full-name . "Petr")
+# 		    (mu4e-sent-folder . "/Sent")
+# 		    (mu4e-drafts-folder . "/Drafts")
+# 		    (mu4e-trash-folder . "/Trash")))
+# 	   )
+# 	  ))
 
-#+end_src
+# #+end_src
 
 * org-agenda                                                        :enabled:
 #+begin_src emacs-lisp
@@ -512,16 +520,20 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 #+end_src
 
 * r/ess                                                             :enabled:
+
+Ess nees to be installed from source:
+
 #+begin_src emacs-lisp
 
   ;; ---------------------
   ;; --------- R ---------
   ;; ---------------------
 
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/ess/lisp")
+  (add-to-list 'load-path "~/.emacs.d/user-libraries/ess/lisp")
   (load "ess-autoloads")
   (require 'ess-r-mode)
 
+  (add-hook 'ess-mode-hook #'lsp)
   (add-hook 'ess-mode-hook
 	    (lambda ()
 	      (setq-local split-width-threshold 0)
@@ -530,7 +542,7 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 	      (setq ess-ask-for-ess-directory nil)
 	      (define-key ess-mode-map (kbd "C-j") 'ess-eval-region-or-line-and-step)))
   ;; (define-key ess-r-mode-map(kbd "C-j") ')
-  
+
 #+end_src
 
 * snakemake                                                        :disabled:

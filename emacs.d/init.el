@@ -1,7 +1,3 @@
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/ess/lisp")
-(load "ess-autoloads")
-(require 'ess-r-mode)
-
 (require 'package)
 (package-initialize)
 
