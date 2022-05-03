@@ -248,14 +248,14 @@
 ;; ---------------------
 
 ;; enable elpy
-(elpy-enable)
+;; (elpy-enable)
 
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-(add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+;; (when (require 'flycheck nil t)
+;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
 
-:init (global-flycheck-mode)
+;; :init (global-flycheck-mode)
 
 ;; ---------------------
 ;; ------ Haskell ------
