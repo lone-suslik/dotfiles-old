@@ -1,19 +1,19 @@
 #+STARTUP: fold
 #+TAGS: { enabled(e) disabled(d) } refine(r)
 * emacs
-** package refresh contents
+** Package: refresh package content on load
 #+begin_src emacs-lisp
   (when (not package-archive-contents)
     (package-refresh-contents))
 #+end_src
 
-** set window size for window systems
+** Set default frame size when opened in a window-system
 #+begin_src emacs-lisp
   (when window-system (set-frame-size (selected-frame) 80 47))
   (when window-system (set-frame-position (selected-frame) 40 30))
 #+end_src
 
-** rebind c-h and help command
+** Rebind C-h ahd help-command
 #+begin_src emacs-lisp
   (keyboard-translate ?\C-h ?\C-?) ;; some basic keyboard stuff, don't remove (written by Petr on 24 of June, 2019)
 
@@ -21,32 +21,32 @@
   (global-set-key [?\C-x ?h] 'help-command)
 #+end_src
 
-** inhibit startup screen
+** Inhibit startup screen
 #+begin_src emacs-lisp
   ;; No startup screen
   (setq inhibit-startup-screen t)
 #+end_src
 
-** inhibit startup message
+** Inhibit startup message
 #+begin_src emacs-lisp
   ;; No startup message
   (setq inhibit-startup-message t)
   (setq inhibit-startup-echo-area-message t)
 #+end_src
 
-** no message in scratch buffer
+** Remove default message in scratch buffer
 #+begin_src emacs-lisp
   ;; No message in scratch buffer
   (setq initial-scratch-message nil)
 #+end_src
 
-** y/n for answering yes/no questions
+** Change yes/no into y/n for answering yes/no questions
 #+begin_src emacs-lisp
   ;; y/n for answering yes/no questions
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** user real ls on darwin for dired
+** Use GNU ls on darwin for dired
 #+begin_src emacs-lisp
   ;; use real ls on darwin for dired
   (when (string= system-type "darwin")
@@ -55,7 +55,7 @@
 	  dired-listing-switches "-aBhl --group-directories-first"))
 #+end_src
 
-** enable linum mode by default
+** Enable linum mode by default
 #+begin_src emacs-lisp
   ;; fix line numbers
   (global-linum-mode t)
@@ -63,11 +63,11 @@
 
 #+end_src
 
-** follow symlinks
+** Follow symlinks without asking
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks nil)
 #+end_src
-** remove messages buffer
+** Remove messages buffer
 #+begin_src emacs-lisp
 
   ;; removes *messages* from the buffer
@@ -76,7 +76,7 @@
 
 #+end_src
 
-** remove competions from buffer
+** Remove completions from buffer list
 #+begin_src emacs-lisp
   ;; Removes *Completions* from buffer
   (add-hook 'minibuffer-exit-hook
@@ -90,17 +90,12 @@
 
 #+end_src
 
-** use 4 characters as default offset
-#+begin_src emacs-lisp
-  
-  ;; ---------------------
-  ;; ------ Extension to mode mapping
-  ;; ---------------------
+** Use 4 characters as default offset for c
+#+begin_src emacs-lisp  
    (setq-default c-basic-offset 4)
-
 #+end_src
 
-** remove top bar
+** Hide top bar
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -112,7 +107,7 @@
   ;; "DejaVuSansMono NF-15"
 #+end_src
 
-** remove menu bar and toolbar
+** Hide menu bar and toolbar
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -123,7 +118,10 @@
   ;(toggle-scroll-bar -1)
 #+end_src
 
-** customize emacs backup locations
+** Set custom emacs backup locations
+This code blocks stores backup files (usually files ending with ~ or
+files surrounded by #) in a specified directory
+
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -140,7 +138,7 @@
 
 #+end_src
 
-** customize modeline
+** Customize modeline
 #+begin_src emacs-lisp
   ;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;; modeline ;;;;;;;
@@ -163,7 +161,7 @@
 
 #+end_src
 
-** use doom modeline
+** Use doom modeline
 # Comment customize modeline if using this.
 
 # #+begin_src emacs-lisp
@@ -172,7 +170,7 @@
 #     :init (doom-modeline-mode 1))
 # #+end_src
 
-** save sesions between launches                                   :disabled:
+** Save sesions between launches                                   :disabled:
 #+begin_src emacs-lisp
 
   ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
