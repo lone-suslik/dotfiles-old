@@ -139,36 +139,36 @@ files surrounded by #) in a specified directory
 #+end_src
 
 ** Customize modeline
-#+begin_src emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;; modeline ;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;
-  (require 'diminish)
-  (eval-after-load "projectile" '(diminish 'projectile-mode " π"))
-  (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
-  (eval-after-load "company" '(diminish 'company-mode " c"))
-  (diminish 'visual-line-mode " λ")
+# #+begin_src emacs-lisp
+#   ;;;;;;;;;;;;;;;;;;;;;;;;
+#   ;;;;;;; modeline ;;;;;;;
+#   ;;;;;;;;;;;;;;;;;;;;;;;;
+#   (require 'diminish)
+#   (eval-after-load "projectile" '(diminish 'projectile-mode " π"))
+#   (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
+#   (eval-after-load "company" '(diminish 'company-mode " c"))
+#   (diminish 'visual-line-mode " λ")
 
-  (setq-default header-line-format
-		(quote
-		 (
-		  "       "
-		  mode-line-buffer-identification
-		  ""
-		  mode-line-modes
-		  )))
-  (setq-default mode-line-format nil)
+#   (setq-default header-line-format
+# 		(quote
+# 		 (
+# 		  "       "
+# 		  mode-line-buffer-identification
+# 		  ""
+# 		  mode-line-modes
+# 		  )))
+#   (setq-default mode-line-format nil)
 
-#+end_src
+# #+end_src
 
 ** Use doom modeline
-# Comment customize modeline if using this.
+Comment customize modeline if using this.
 
-# #+begin_src emacs-lisp
-#   (use-package doom-modeline
-#     :ensure t
-#     :init (doom-modeline-mode 1))
-# #+end_src
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
+#+end_src
 
 ** Save sesions between launches                                   :disabled:
 #+begin_src emacs-lisp
@@ -237,27 +237,27 @@ files surrounded by #) in a specified directory
   ;;   :hook (company-mode . company-box-mode))
 #+end_src
 * ivy
-#+begin_src emacs-lisp
-  (use-package ivy
-    :diminish
-    ;; :bind (("C-s" . swiper)
-    ;; 	 :map ivy-minibuffer-map
-    ;; 	 ("TAB" . ivy-alt-done)
-    ;; 	 ("C-l" . ivy-alt-done)
-    ;; 	 ("C-j" . ivy-next-line)
-    ;; 	 ("C-k" . ivy-previous-line)
-    ;; 	 :map ivy-switch-buffer-map
-    ;; 	 ("C-k" . ivy-previous-line)
-    ;; 	 ("C-l" . ivy-done)
-    ;; 	 ("C-d" . ivy-switch-buffer-kill)
-    ;; 	 :map ivy-reverse-i-search-map
-    ;; 	 ("C-k" . ivy-previous-line)
-    ;; 	 ("C-d" . ivy-reverse-i-search-kill))
-    :init
-    (ivy-mode 1)
-    :config)
+# #+begin_src emacs-lisp
+#   (use-package ivy
+#     :diminish
+#     ;; :bind (("C-s" . swiper)
+#     ;; 	 :map ivy-minibuffer-map
+#     ;; 	 ("TAB" . ivy-alt-done)
+#     ;; 	 ("C-l" . ivy-alt-done)
+#     ;; 	 ("C-j" . ivy-next-line)
+#     ;; 	 ("C-k" . ivy-previous-line)
+#     ;; 	 :map ivy-switch-buffer-map
+#     ;; 	 ("C-k" . ivy-previous-line)
+#     ;; 	 ("C-l" . ivy-done)
+#     ;; 	 ("C-d" . ivy-switch-buffer-kill)
+#     ;; 	 :map ivy-reverse-i-search-map
+#     ;; 	 ("C-k" . ivy-previous-line)
+#     ;; 	 ("C-d" . ivy-reverse-i-search-kill))
+#     :init
+#     (ivy-mode 1)
+#     :config)
 
-#+end_src
+# #+end_src
 * helm                                                             :disabled:
 #+begin_src emacs-lisp
 
@@ -431,6 +431,9 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
    '((R . t)
      (emacs-lisp . nil)))
 
+  ;; Code editing in Babel blocks
+  (setq org-src-tab-acts-natively t)
+
 #+end_src
 
 * org-roam                                                   :enabled:refine:
@@ -484,15 +487,13 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 
 * projectile                                                       :disabled:
 #+begin_src emacs-lisp
-
   ;; ---------------------
   ;; ---- Projectile -----
   ;; ---------------------
-  ;; (require 'projectile)
-  ;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  ;; (projectile-mode +1)
-
+  (require 'projectile)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
 #+end_src
 
 * python                                                           :disabled:
@@ -611,105 +612,105 @@ Ess nees to be installed from source:
 #+end_src
 
 * vertico / marginalia / embark / consult / orderless       :disabled:refine:
-# ** marginalia
-# #+begin_src emacs-lisp
+** marginalia
+#+begin_src emacs-lisp
 
-#   ;; ---------------------
-#   ;; ---- Marginalia -----
-#   ;; ---------------------
+  ;; ---------------------
+  ;; ---- Marginalia -----
+  ;; ---------------------
 
-#   ;; Enable richer annotations using the Marginalia package
-#   (use-package marginalia
-#     :ensure t
-#     :config
-#     (marginalia-mode))
+  ;; Enable richer annotations using the Marginalia package
+  (use-package marginalia
+    :ensure t
+    :config
+    (marginalia-mode))
 
-# #+end_src
+#+end_src
 
-# ** embark
-# #+begin_src emacs-lisp
+** embark
+#+begin_src emacs-lisp
 
-#   ;; ---------------------
-#   ;; ------ Embark -------
-#   ;; ---------------------
-#   (use-package embark
-#     :ensure t
+  ;; ---------------------
+  ;; ------ Embark -------
+  ;; ---------------------
+  (use-package embark
+    :ensure t
 
-#     :bind
-#     (("C-." . embark-act)         ;; pick some comfortable binding
-#      ("M-." . embark-dwim)        ;; good alternative: M-.
-#      ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+    :bind
+    (("C-." . embark-act)         ;; pick some comfortable binding
+     ("M-." . embark-dwim)        ;; good alternative: M-.
+     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 
-#     :init
+    :init
 
-#     ;; Optionally replace the key help with a completing-read interface
-#     (setq prefix-help-command #'embark-prefix-help-command)
+    ;; Optionally replace the key help with a completing-read interface
+    (setq prefix-help-command #'embark-prefix-help-command)
 
-#     :config
+    :config
 
-#     ;; Hide the mode line of the Embark live/completions buffers
-#     (add-to-list 'display-buffer-alist
-# 		 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-# 		   nil
-# 		   (window-parameters (mode-line-format . none)))))
+    ;; Hide the mode line of the Embark live/completions buffers
+    (add-to-list 'display-buffer-alist
+		 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+		   nil
+		   (window-parameters (mode-line-format . none)))))
 
-# #+end_src
+#+end_src
 
-# ** embark-consult
-# #+begin_src emacs-lisp
+** embark-consult
+#+begin_src emacs-lisp
 
-#   ;; Consult users will also want the embark-consult package.
-#   (use-package embark-consult
-#     :ensure t
-#     :after (embark consult)
-#     :demand t ; only necessary if you have the hook below
-#     ;; if you want to have consult previews as you move around an
-#     ;; auto-updating embark collect buffer
-#     :hook
-#     (embark-collect-mode . consult-preview-at-point-mode))
+  ;; Consult users will also want the embark-consult package.
+  (use-package embark-consult
+    :ensure t
+    :after (embark consult)
+    :demand t ; only necessary if you have the hook below
+    ;; if you want to have consult previews as you move around an
+    ;; auto-updating embark collect buffer
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
 
-# #+end_src
+#+end_src
 
-# ** orderless
-# #+begin_src emacs-lisp
+** orderless
+#+begin_src emacs-lisp
 
-#   ;; ---------------------
-#   ;; ----- Orderless -----
-#   ;; ---------------------
-#   ;; Optionally use the `orderless' completion style.
-#   (use-package orderless
-#     :ensure t
-#     :init
-#     (setq completion-styles '(orderless basic)
-# 	  completion-category-defaults nil
-# 	  completion-category-overrides '((file (styles partial-completion)))))
+  ;; ---------------------
+  ;; ----- Orderless -----
+  ;; ---------------------
+  ;; Optionally use the `orderless' completion style.
+  (use-package orderless
+    :ensure t
+    :init
+    (setq completion-styles '(orderless basic)
+	  completion-category-defaults nil
+	  completion-category-overrides '((file (styles partial-completion)))))
 
-# #+end_src
+#+end_src
 
-# ** vertico
-# #+begin_src emacs-lisp
+** vertico
+#+begin_src emacs-lisp
 
-#   ;; ---------------------
-#   ;; ------ Vertico ------
-#   ;; ---------------------
-#   (use-package vertico
-#     :init
-#     (vertico-mode)
+  ;; ---------------------
+  ;; ------ Vertico ------
+  ;; ---------------------
+  (use-package vertico
+    :init
+    (vertico-mode)
 
-#     ;; Different scroll margin
-#     (setq vertico-scroll-margin 0)
+    ;; Different scroll margin
+    (setq vertico-scroll-margin 0)
 
-#     ;; Show more candidates
-#     (setq vertico-count 20)
+    ;; Show more candidates
+    (setq vertico-count 20)
 
-#     ;; Grow and shrink the Vertico minibuffer
-#     ;; (setq vertico-resize t)
+    ;; Grow and shrink the Vertico minibuffer
+    ;; (setq vertico-resize t)
 
-#     ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-#     ;; (setq vertico-cycle t)
-#     )
+    ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+    ;; (setq vertico-cycle t)
+    )
 
-# #+end_src
+#+end_src
 
 * preserve vertico history over emacs restarts
 #+begin_src emacs-lisp
