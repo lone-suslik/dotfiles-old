@@ -1,18 +1,17 @@
-#+STARTUP: fold
 * emacs
-** Package: refresh package content on load
+** package: refresh package content on load
 #+begin_src emacs-lisp
   (when (not package-archive-contents)
     (package-refresh-contents))
 #+end_src
 
-** Set default frame size when opened in a window-system
+** set default frame size when opened in a window-system
 #+begin_src emacs-lisp
   (when window-system (set-frame-size (selected-frame) 80 47))
   (when window-system (set-frame-position (selected-frame) 40 30))
 #+end_src
 
-** Rebind C-h ahd help-command
+** rebind C-h ahd help-command
 #+begin_src emacs-lisp
   (keyboard-translate ?\C-h ?\C-?) ;; some basic keyboard stuff, don't remove (written by Petr on 24 of June, 2019)
 
@@ -20,32 +19,32 @@
   (global-set-key [?\C-x ?h] 'help-command)
 #+end_src
 
-** Inhibit startup screen
+** inhibit startup screen
 #+begin_src emacs-lisp
   ;; No startup screen
   (setq inhibit-startup-screen t)
 #+end_src
 
-** Inhibit startup message
+** inhibit startup message
 #+begin_src emacs-lisp
   ;; No startup message
   (setq inhibit-startup-message t)
   (setq inhibit-startup-echo-area-message t)
 #+end_src
 
-** Remove default message in scratch buffer
+** remove default message in scratch buffer
 #+begin_src emacs-lisp
   ;; No message in scratch buffer
   (setq initial-scratch-message nil)
 #+end_src
 
-** Change yes/no into y/n for answering yes/no questions
+** change yes/no into y/n for answering yes/no questions
 #+begin_src emacs-lisp
   ;; y/n for answering yes/no questions
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** Use GNU ls on darwin for dired
+** use GNU ls on darwin for dired
 #+begin_src emacs-lisp
   ;; use real ls on darwin for dired
   (when (string= system-type "darwin")
@@ -54,7 +53,7 @@
 	  dired-listing-switches "-aBhl --group-directories-first"))
 #+end_src
 
-** Enable linum mode by default
+** enable linum mode by default
 #+begin_src emacs-lisp
   ;; fix line numbers
   (global-linum-mode t)
@@ -62,13 +61,13 @@
 
 #+end_src
 
-** Follow symlinks without asking
+** follow symlinks without asking
 #+begin_src emacs-lisp
   ;; (setq vc-follow-symlinks nil)
   (setq vc-follow-symlinks t)
   (setq vc-handled-backends nil)
 #+end_src
-** Remove messages buffer
+** remove messages buffer
 #+begin_src emacs-lisp
 
   ;; removes *messages* from the buffer
@@ -77,7 +76,7 @@
 
 #+end_src
 
-** Remove completions from buffer list
+** remove completions from buffer list
 #+begin_src emacs-lisp
   ;; Removes *Completions* from buffer
   (add-hook 'minibuffer-exit-hook
@@ -91,12 +90,12 @@
 
 #+end_src
 
-** Use 4 characters as default offset for c
+** use 4 characters as default offset for c
 #+begin_src emacs-lisp  
    (setq-default c-basic-offset 4)
 #+end_src
 
-** Hide top bar
+** hide top bar
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -108,7 +107,7 @@
   ;; "DejaVuSansMono NF-15"
 #+end_src
 
-** Hide menu bar and toolbar
+** hide menu bar and toolbar
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -119,7 +118,7 @@
   ;(toggle-scroll-bar -1)
 #+end_src
 
-** Set custom emacs backup locations
+** set custom emacs backup locations
 This code blocks stores backup files (usually files ending with ~ or
 files surrounded by #) in a specified directory
 
@@ -139,7 +138,7 @@ files surrounded by #) in a specified directory
 
 #+end_src
 
-** Customize modeline
+** customize modeline
 # #+begin_src emacs-lisp
 #   ;;;;;;;;;;;;;;;;;;;;;;;;
 #   ;;;;;;; modeline ;;;;;;;
@@ -162,7 +161,7 @@ files surrounded by #) in a specified directory
 
 # #+end_src
 
-** Use doom modeline
+** use doom modeline
 Comment customize modeline if using this.
 
 #+begin_src emacs-lisp
@@ -171,7 +170,7 @@ Comment customize modeline if using this.
     :init (doom-modeline-mode 1))
 #+end_src
 
-** Save sesions between launches                                   
+** save sesions between launches                                   
 #+begin_src emacs-lisp
 
   ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -203,6 +202,62 @@ Comment customize modeline if using this.
 
 #+end_src
 
+* theming / custom
+#+begin_src emacs-lisp
+
+  ;; ;; ;;; ------ THEMING -------
+  ;; (load-theme 'dracula t)
+  ;; (load-theme 'monokai t)
+
+  ;; ;;; ------ CUSTOM --------
+  ;; (custom-set-variables
+  ;;  ;; custom-set-variables was added by Custom.
+  ;;  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;;  ;; Your init file should contain only one such instance.
+  ;;  ;; If there is more than one, they won't work right.
+  ;;  '(ansi-color-faces-vector
+  ;;    [default bold shadow italic underline bold bold-italic bold])
+  ;;  '(ansi-color-names-vector
+  ;;    (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#262626"))
+  ;;  '(custom-enabled-themes '(dracula))
+  ;;  '(custom-safe-themes
+  ;;    '("fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default))
+  ;;  '(fci-rule-color "#3a3a3a")
+  ;;  '(flycheck-checker-error-threshold 800)
+  ;;  '(hl-sexp-background-color "#121212")
+  ;;  '(package-selected-packages
+  ;;    '(lsp-ui lsp-mode embark-consult embark marginalia orderless vertico citar org-roam elpher ace-window projectile helm groovy-mode poly-R poly-markdown polymode ess yaml-mode fish-mode snakemake-mode dracula-theme visual-fill-column sicp markdown-mode haskell-mode gitignore-mode))
+  ;;  '(vc-annotate-background nil)
+  ;;  '(vc-annotate-color-map
+  ;;    '((20 . "#f36c60")
+  ;;      (40 . "#ff9800")
+  ;;      (60 . "#fff59d")
+  ;;      (80 . "#8bc34a")
+  ;;      (100 . "#81d4fa")
+  ;;      (120 . "#4dd0e1")
+  ;;      (140 . "#b39ddb")
+  ;;      (160 . "#f36c60")
+  ;;      (180 . "#ff9800")
+  ;;      (200 . "#fff59d")
+  ;;      (220 . "#8bc34a")
+  ;;      (240 . "#81d4fa")
+  ;;      (260 . "#4dd0e1")
+  ;;      (280 . "#b39ddb")
+  ;;      (300 . "#f36c60")
+  ;;      (320 . "#ff9800")
+  ;;      (340 . "#fff59d")
+  ;;      (360 . "#8bc34a")))
+  ;;  '(vc-annotate-very-old-color nil))
+  ;; (custom-set-faces
+  ;;  ;; custom-set-faces was added by Custom.
+  ;;  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;;  ;; Your init file should contain only one such instance.
+  ;;  ;; If there is more than one, they won't work right.
+  ;;  )
+  ;; (put 'downcase-region 'disabled nil)
+
+#+end_src
+
 * citar
 #+begin_src emacs-lisp
 
@@ -231,6 +286,233 @@ Comment customize modeline if using this.
 	  (note . "${author:15} (${date year issued:4}): ${title}")))
 #+end_src
 
+* org-mode
+** org-mode
+
+#+begin_src emacs-lisp
+  (require 'org-inlinetask)
+  (setq org-log-done t)
+  (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(0)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
+  ;; setup keys
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c t") 'org-insert-structure-template)
+  ;; (global-set-key (kbd "C-c C-w") 'org-refile-targets)
+
+  ;; (setq org-refile-targets '(("~/Documents/Org/todo.org" :maxlevel . 3)
+  ;;                            ("~/Documents/Org/someday.org" :level . 1)
+  ;;                            ("~/Documents/Org/tickler.org" :maxlevel . 2)
+  ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
+
+  (setq org-capture-templates '(("t" "Todo [inbox]" entry
+				 (file+headline "~/Documents/org/inbox.org" "Tasks")
+				 "* TODO %i%?")
+				("m" "Morning planning" entry
+				 (file+headline "~/Documents/org/morning.org" "Tasks")
+			       "* TODO %i%?")))
+
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+#+end_src
+
+** ensure folding by default
+#+begin_src emacs-lisp
+  (setq org-startup-folded t)
+#+end_src
+** code editing in Babel blocks
+#+begin_src
+  (setq org-src-tab-acts-natively t)
+#+end_src
+** configure Babel languages
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+  'org-babel-load-languages
+  '((R . t)
+    (emacs-lisp . nil)
+    (python . t)))
+#+end_src
+
+** allow images in emacs buffer
+#+begin_src emacs-lisp
+  (setq org-startup-with-inline-images t)
+  (setq org-redisplay-inline-images t)
+#+end_src
+** change behaviour of org-goto
+#+begin_src emacs-lisp
+  (setq org-goto-interface (quote outline-path-completion))
+#+end_src
+** org-agenda
+#+begin_src emacs-lisp
+
+  ;; ---------------------
+  ;; ------ agenda -------
+  ;; ---------------------
+  (setq org-directory (quote "~/Documents/org"))
+  (setq org-agenda-files '(org-directory))
+
+  (setq org-agenda-files (directory-files-recursively org-directory "org$"))
+
+#+end_src
+
+** bibtex completion display formats
+
+#+begin_src emacs-lisp  
+  (setq bibtex-completion-display-formats
+	'((main . "${author:15} (${date year issued:4}): ${title}")
+	  (suffix . "")
+	  (preview . "")
+	  (note . "")))
+#+end_src
+
+** org-roam
+
+#+begin_src emacs-lisp
+  ;; ---------------------
+  ;; ----- ORG-roam ------ 
+  ;; ---------------------
+  (require 'org-roam)
+  (setq citar-notes-paths '("~/Documents/org/roam/references"))
+  (setq citar-file-note-extensions '("org"))
+#+end_src
+
+*** org-roam directory & basic configs
+#+begin_src emacs-lisp  
+  (setq org-roam-directory (file-truename "~/Documents/org/roam"))
+  (setq org-roam-db-location "~/Documents/org/roam/roam.db")
+  (org-roam-db-autosync-mode)
+  (setq org-roam-completion-everywhere t)
+#+end_src
+
+*** org-roam keybindings
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c f") 'org-roam-node-find)
+  (global-set-key (kbd "C-c i") 'org-roam-node-insert)
+  (global-set-key (kbd "C-c s") 'org-roam-capture)
+  (global-set-key (kbd "C-c b") 'org-roam-buffer-toggle)
+
+  (define-key org-roam-mode-map (kbd "C-c C-o") 'org-open-at-point)
+#+end_src
+
+*** org-roam buffer
+
+#+begin_src emacs-lisp
+  (setq org-roam-mode-sections
+	(list #'org-roam-backlinks-section
+	      #'org-roam-reflinks-section))  
+#+end_src
+
+*** org-open in the same window
+Default option is to split screen and open the link in another window.
+
+#+begin_src emacs-lisp
+  (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)
+#+end_src
+
+*** org-roam capture templates
+
+- references/${title}.org. <- References go here. These are papers or
+  books I read. 1 file per reference. If it is a book I want to read,
+  just add a reference and create a TODO item (consider how to filter
+  them out in agenda)
+- notes/${title}.org <- notes/${title}.org. Knowledge graph / Zettelkasten / evergreen
+- recurrent/${title}.org <- recurrent events (group meetings, journal
+  clubs, etc)
+- people/${title}.org <- all personal info on people. This includes
+  recruitment - then people's files can be linked from the
+  recruitment campaign page.
+- projects/${title}.org <- individual projects, including recruitment campaings, purchases etc
+- writing/${title}.org <- my short and long-form writings
+	      
+#+begin_src emacs-lisp
+  (setq org-roam-capture-templates
+      '(
+	("n" "note" plain
+	 "%?"
+	 :if-new (file+head "notes/${slug}.org"
+			    "#+title: ${title}\n")
+	 :immediate-finish t
+	 :unnarrowed t)
+	("c" "recurrent" plain "%?"
+	 :if-new (file+head "recurrent/${slug}.org"
+			    "#+title: ${title}\n")
+	 :immediate-finish t
+	 :unnarrowed t)
+	("p" "person" plain "%?"
+	 :if-new (file+head "people/${slug}.org"
+			    "#+title: ${title}\n")
+	 :immediate-finish t
+	 :unnarrowed t)
+	("j" "project" plain "%?"
+	 :if-new (file+head "people/${slug}.org"
+			    "#+title: ${title}\n")
+	 :immediate-finish t
+	 :unnarrowed t)		
+	("w" "writing" plain "%?"
+	 :if-new (file+head "writings/${slug}.org"
+			    "#+title: ${title}\n")
+	 :immediate-finish t
+	 :unnarrowed t)))
+#+end_src
+
+*** add 'type' propoperty and show file type in completion buffer
+#+begin_src emacs-lisp
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return the TYPE of NODE."
+    (condition-case nil
+	(file-name-nondirectory
+	 (directory-file-name
+	  (file-name-directory
+	   (file-relative-name (org-roam-node-file node) org-roam-directory))))
+      (error "")))
+
+  (setq org-roam-node-display-template
+      (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+#+end_src
+
+*** function to capture references directly from citar
+Slightly modified code from ref
+#+begin_src emacs-lisp
+
+    (defun suslik/org-roam-node-from-cite (keys-entries)
+      (interactive (list (citar-get-entry (citar-select-ref))))
+      (let ((title (replace-regexp-in-string "-[[:digit:]]+" "" (citar-format--entry
+								 "${author} - (${date}) - ${title}"
+								 (cdr keys-entries))))
+	    (key (citar-format--entry "${=key=}"
+				      (cdr keys-entries))))
+	(message key)
+	(org-roam-capture- :templates
+			   '(("r" "reference" plain "%?" :if-new
+			      (file+head "references/${citekey}.org"
+					 ":PROPERTIES:
+
+:ROAM_REFS: [cite:@${citekey}]
+:END:
+#+title: ${title}\n")
+			      :unnarrowed t))
+			   :info (list :citekey key)
+			   :node (org-roam-node-create :title title)
+			   :props '(:finalize find-file))))
+#+end_src
+
+** org-journal
+#+begin_src emacs-lisp
+  (require 'org-journal)
+  (setq org-journal-dir "~/Documents/org/org-journal/")
+  (setq org-journal-file-type 'monthly)
+#+end_src
+** org-cite-csl-activate
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/user-libraries/org-cite-csl-activate")
+
+  (require 'oc-csl-activate)
+  (setq org-cite-activate-processor 'csl-activate)
+  (setq org-cite-csl-activate-use-citar-cache t)
+  (add-hook 'org-mode-hook (lambda () (cursor-sensor-mode 1)))
+  (add-hook 'org-mode-hook (lambda () (org-cite-csl-activate-render-all)))
+#+end_src
 * company
 #+begin_src emacs-lisp
   (use-package company
@@ -312,242 +594,6 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
   (setq read-process-output-max (* 1024 1024))
 #+end_src
 
-* org-mode
-** org-mode
-#+begin_src emacs-lisp
-
-    ;; ---------------------
-    ;; -------- ORG --------
-    ;; ---------------------
-    (require 'org-inlinetask)
-    (setq org-log-done t)
-    (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(0)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-
-    ;; setup keys
-    (global-set-key (kbd "C-c c") 'org-capture)
-    (global-set-key (kbd "C-c a") 'org-agenda)
-    (global-set-key (kbd "C-c t") 'org-insert-structure-template)
-    ;; (global-set-key (kbd "C-c C-w") 'org-refile-targets)
-
-    ;; (setq org-refile-targets '(("~/Documents/Org/todo.org" :maxlevel . 3)
-    ;;                            ("~/Documents/Org/someday.org" :level . 1)
-    ;;                            ("~/Documents/Org/tickler.org" :maxlevel . 2)
-    ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
-
-    (setq org-capture-templates '(("t" "Todo [inbox]" entry
-				   (file+headline "~/Documents/org/inbox.org" "Tasks")
-				   "* TODO %i%?")
-				  ("s" "Slipbox" entry
-				   (file+headline "~/Documents/org/roam/inbox.org" "Slipbox")
-				   "* %i% \n %U"
-				   :empty-lines 1)))
-
-    (add-hook 'org-mode-hook 'turn-on-auto-fill)
-    (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
-#+end_src
-** code editing in Babel blocks
-#+begin_src
-  (setq org-src-tab-acts-natively t)
-#+end_src
-** configure Babel languages
-#+begin_src emacs-lisp
-  (org-babel-do-load-languages
-  'org-babel-load-languages
-  '((R . t)
-    (emacs-lisp . nil)
-    (python . t)))
-#+end_src
-
-** allow images in emacs buffer
-#+begin_src emacs-lisp
-  (setq org-startup-with-inline-images t)
-  (setq org-redisplay-inline-images t)
-#+end_src
-** change behaviour of org-goto
-#+begin_src emacs-lisp
-  (setq org-goto-interface (quote outline-path-completion))
-#+end_src
-** org-agenda
-#+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; ------ agenda -------
-  ;; ---------------------
-  (setq org-directory (quote "~/Documents/org"))
-  (setq org-agenda-files '(org-directory))
-
-  (setq org-agenda-files (directory-files-recursively org-directory "org$"))
-
-#+end_src
-
-** Set bibtex completion display formats
-
-#+begin_src emacs-lisp  
-  (setq bibtex-completion-display-formats
-	'((main . "${author:15} (${date year issued:4}): ${title}")
-	  (suffix . "")
-	  (preview . "")
-	  (note . "")))
-#+end_src
-
-** org-roam
-
-#+begin_src emacs-lisp
-  ;; ---------------------
-  ;; ----- ORG-roam ------ 
-  ;; ---------------------
-  (require 'org-roam)
-  (setq citar-notes-paths '("~/Documents/Org/roam/references"))
-  (setq citar-file-note-extensions '("org"))
-#+end_src
-
-*** Set org-roam directory  & basic configs
-#+begin_src emacs-lisp  
-  (setq org-roam-directory (file-truename "~/Documents/Org/roam"))
-  (org-roam-db-autosync-mode)
-  (setq org-roam-completion-everywhere t)
-#+end_src
-
-*** org-roam keybindings
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c f") 'org-roam-node-find)
-  (global-set-key (kbd "C-c i") 'org-roam-node-insert)
-  (global-set-key (kbd "C-c s") 'org-roam-capture)
-  (global-set-key (kbd "C-c b") 'org-roam-buffer-toggle)
-
-  (define-key org-roam-mode-map (kbd "C-c C-o") 'org-open-at-point)
-#+end_src
-
-*** org-roam buffer
-
-#+begin_src emacs-lisp
-  (setq org-roam-mode-sections
-	(list #'org-roam-backlinks-section
-	      #'org-roam-reflinks-section))  
-#+end_src
-
-*** make sure org-open does not create another window
-#+begin_src emacs-lisp
-  (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)
-#+end_src
-
-*** org-roam capture templates
-
-- references/${title}.org. <- References go here. These are papers or
-  books I read. 1 file per reference. If it is a book I want to read,
-  just add a reference and create a TODO item (consider how to filter
-  them out in agenda)
-- notes/${title}.org <- notes/${title}.org. Knowledge graph / Zettelkasten / evergreen
-- recurrent/${title}.org <- recurrent events (group meetings, 1:1s, journal club)
-- people/${title}.org <- all personal info on people. This includes
-  recruitment - then people's files can be linked from the
-  recruitment page.
-- projects/${title}.org <- individual projects, including recruitment campaings, purchases etc
-- writing/${title}.org <- my short and long-form writings
-	      
-#+begin_src emacs-lisp
-  (setq org-roam-capture-templates
-      '(
-	("n" "note" plain
-	 "%?"
-	 :if-new (file+head "notes/${slug}.org"
-			    "#+title: ${title}\n")
-	 :immediate-finish t
-	 :unnarrowed t)
-	("c" "recurrent" plain "%?"
-	 :if-new (file+head "recurrent/${title}.org"
-			    "#+title: ${title}\n")
-	 :immediate-finish t
-	 :unnarrowed t)
-	("p" "person" plain "%?"
-	 :if-new (file+head "people/${title}.org"
-			    "#+title: ${title}\n")
-	 :immediate-finish t
-	 :unnarrowed t)
-	("j" "project" plain "%?"
-	 :if-new (file+head "people/${title}.org"
-			    "#+title: ${title}\n")
-	 :immediate-finish t
-	 :unnarrowed t)		
-	("w" "writing" plain "%?"
-	 :if-new (file+head "writings/${title}.org"
-			    "#+title: ${title}\n")
-	 :immediate-finish t
-	 :unnarrowed t)))
-#+end_src
-
-*** add 'type' propoperty and show file type in completion buffer
-#+begin_src emacs-lisp
-  (cl-defmethod org-roam-node-type ((node org-roam-node))
-    "Return the TYPE of NODE."
-    (condition-case nil
-	(file-name-nondirectory
-	 (directory-file-name
-	  (file-name-directory
-	   (file-relative-name (org-roam-node-file node) org-roam-directory))))
-      (error "")))
-
-  (setq org-roam-node-display-template
-      (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-#+end_src
-
-*** function to capture references directly from citar
-Slightly modified code from ref
-#+begin_src emacs-lisp
-		      (defun zk-citar--create-note (keys-entries)
-			(interactive (list (citar-get-entry (citar-select-ref))))
-			(let ((title (replace-regexp-in-string "-[[:digit:]]+" "" (citar-format--entry
-										   "${author} - (${date}) - ${title}"
-										   (cdr keys-entries)))))
-			  (org-roam-capture- :templates
-					     '(("r" "reference" plain "%?" :if-new
-						(file+head "references/${citekey}.org"
-							   ":PROzzS:")
-						:unnarrowed t))
-					     :info (list :citekey (car keys-entries))
-					     :node (org-roam-node-create :title title)
-					     :props '(:finalize find-file)))
-			)
-
-		(defun suslik/org-roam-node-from-cite (keys-entries)
-		  (interactive (list (citar-get-entry (citar-select-ref))))
-		  (let ((title (replace-regexp-in-string "-[[:digit:]]+" "" (citar-format--entry
-									     "${author} - (${date}) - ${title}"
-									     (cdr keys-entries))))
-			(key (citar-format--entry "${=key=}"
-						  (cdr keys-entries)))
-			)
-		    (message key)
-		    (org-roam-capture- :templates
-				       '(("r" "reference" plain "%?" :if-new
-					  (file+head "references/${citekey}.org"
-						     ":PROPERTIES:
-:ROAM_REFS: [cite:@${citekey}]
-:END:
-#+title: ${title}\n")
-					  :unnarrowed t))
-				       :info (list :citekey key)
-				       :node (org-roam-node-create :title title)
-				       :props '(:finalize find-file))))
-#+end_src
-
-** org-journal
-#+begin_src emacs-lisp
-  (require 'org-journal)
-  (setq org-journal-dir "~/Documents/Org/org-journal/")
-  (setq org-journal-file-type 'monthly)
-#+end_src
-** org-cite-csl-activate
-#+begin_src emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/user-libraries/org-cite-csl-activate")
-
-  (require 'oc-csl-activate)
-  (setq org-cite-activate-processor 'csl-activate)
-  (setq org-cite-csl-activate-use-citar-cache t)
-  (add-hook 'org-mode-hook (lambda () (cursor-sensor-mode 1)))
-  (add-hook 'org-mode-hook (lambda () (org-cite-csl-activate-render-all)))
-#+end_src
 * projectile
 #+begin_src emacs-lisp
   ;; ---------------------
@@ -600,64 +646,7 @@ Ess nees to be installed from source:
 
 #+end_src
 
-* theming / custom
-#+begin_src emacs-lisp
-
-  ;; ;; ;;; ------ THEMING -------
-  ;; (load-theme 'dracula t)
-  ;; (load-theme 'monokai t)
-
-  ;; ;;; ------ CUSTOM --------
-  ;; (custom-set-variables
-  ;;  ;; custom-set-variables was added by Custom.
-  ;;  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;;  ;; Your init file should contain only one such instance.
-  ;;  ;; If there is more than one, they won't work right.
-  ;;  '(ansi-color-faces-vector
-  ;;    [default bold shadow italic underline bold bold-italic bold])
-  ;;  '(ansi-color-names-vector
-  ;;    (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#262626"))
-  ;;  '(custom-enabled-themes '(dracula))
-  ;;  '(custom-safe-themes
-  ;;    '("fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default))
-  ;;  '(fci-rule-color "#3a3a3a")
-  ;;  '(flycheck-checker-error-threshold 800)
-  ;;  '(hl-sexp-background-color "#121212")
-  ;;  '(package-selected-packages
-  ;;    '(lsp-ui lsp-mode embark-consult embark marginalia orderless vertico citar org-roam elpher ace-window projectile helm groovy-mode poly-R poly-markdown polymode ess yaml-mode fish-mode snakemake-mode dracula-theme visual-fill-column sicp markdown-mode haskell-mode gitignore-mode))
-  ;;  '(vc-annotate-background nil)
-  ;;  '(vc-annotate-color-map
-  ;;    '((20 . "#f36c60")
-  ;;      (40 . "#ff9800")
-  ;;      (60 . "#fff59d")
-  ;;      (80 . "#8bc34a")
-  ;;      (100 . "#81d4fa")
-  ;;      (120 . "#4dd0e1")
-  ;;      (140 . "#b39ddb")
-  ;;      (160 . "#f36c60")
-  ;;      (180 . "#ff9800")
-  ;;      (200 . "#fff59d")
-  ;;      (220 . "#8bc34a")
-  ;;      (240 . "#81d4fa")
-  ;;      (260 . "#4dd0e1")
-  ;;      (280 . "#b39ddb")
-  ;;      (300 . "#f36c60")
-  ;;      (320 . "#ff9800")
-  ;;      (340 . "#fff59d")
-  ;;      (360 . "#8bc34a")))
-  ;;  '(vc-annotate-very-old-color nil))
-  ;; (custom-set-faces
-  ;;  ;; custom-set-faces was added by Custom.
-  ;;  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;;  ;; Your init file should contain only one such instance.
-  ;;  ;; If there is more than one, they won't work right.
-  ;;  )
-  ;; (put 'downcase-region 'disabled nil)
-
-#+end_src
-
-* vertico / marginalia / embark / consult / orderless
-** marginalia
+* marginalia
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -672,27 +661,20 @@ Ess nees to be installed from source:
 
 #+end_src
 
-** embark
+* embark
+
 #+begin_src emacs-lisp
 
-  ;; ---------------------
-  ;; ------ Embark -------
-  ;; ---------------------
   (use-package embark
     :ensure t
-
     :bind
     (("C-c m" . embark-act)         ;; pick some comfortable binding
      ("M-." . embark-dwim)        ;; good alternative: M-.
      ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-
     :init
-
     ;; Optionally replace the key help with a completing-read interface
     (setq prefix-help-command #'embark-prefix-help-command)
-
     :config
-
     ;; Hide the mode line of the Embark live/completions buffers
     (add-to-list 'display-buffer-alist
 		 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -701,10 +683,10 @@ Ess nees to be installed from source:
 
 #+end_src
 
-** embark-consult
+* embark-consult
+
 #+begin_src emacs-lisp
 
-  ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
     :ensure t
     :after (embark consult)
@@ -716,13 +698,8 @@ Ess nees to be installed from source:
 
 #+end_src
 
-** orderless
+* orderless
 #+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; ----- Orderless -----
-  ;; ---------------------
-  ;; Optionally use the `orderless' completion style.
   (use-package orderless
     :ensure t
     :init
@@ -732,12 +709,9 @@ Ess nees to be installed from source:
 
 #+end_src
 
-** vertico
-#+begin_src emacs-lisp
+* vertico
 
-  ;; ---------------------
-  ;; ------ Vertico ------
-  ;; ---------------------
+#+begin_src emacs-lisp
   (use-package vertico
     :init
     (vertico-mode)
@@ -757,7 +731,8 @@ Ess nees to be installed from source:
 
 #+end_src
 
-* preserve vertico history over emacs restarts
+** preserve vertico history over emacs restarts
+
 #+begin_src emacs-lisp
 
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
