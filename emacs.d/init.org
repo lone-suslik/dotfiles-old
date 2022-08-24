@@ -206,8 +206,8 @@ Comment customize modeline if using this.
 #+begin_src emacs-lisp
 
   ;; ;; ;;; ------ THEMING -------
-  ;; (load-theme 'dracula t)
-  ;; (load-theme 'monokai t)
+   (load-theme 'dracula t)
+   (load-theme 'monokai t)
 
   ;; ;;; ------ CUSTOM --------
   ;; (custom-set-variables
@@ -497,6 +497,12 @@ Slightly modified code from ref
 			   :props '(:finalize find-file))))
 #+end_src
 
+*** unique links in org-roam session buffer
+#+begin_src emacs-lisp
+  (setq org-roam-mode-sections
+	'((org-roam-backlinks-section :unique t)
+	  org-roam-reflinks-section))
+#+end_src
 ** org-journal
 #+begin_src emacs-lisp
   (require 'org-journal)
@@ -771,6 +777,16 @@ Ess nees to be installed from source:
 #+end_src
 
 * disabled
+** make org use symbols instead of bullets
+
+# #+begin_src emacs-lisp
+#   (require 'org-superstar)
+#   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+
+#   (setq org-superstar-remove-leading-stars t)
+#   (setq org-superstar-headline-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))
+# #+end_src
+
 ** mu4e
 # #+begin_src emacs-lisp
 
