@@ -292,7 +292,7 @@ Comment customize modeline if using this.
 #+begin_src emacs-lisp
   (require 'org-inlinetask)
   (setq org-log-done t)
-  (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(0)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
   ;; setup keys
   (global-set-key (kbd "C-c c") 'org-capture)
@@ -310,7 +310,7 @@ Comment customize modeline if using this.
 				 "* TODO %i%?")
 				("m" "Morning planning" entry
 				 (file+headline "~/Documents/org/morning.org" "Tasks")
-			       "* TODO %i%?")))
+			       "* %t %i%?")))
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
@@ -417,7 +417,7 @@ Default option is to split screen and open the link in another window.
   just add a reference and create a TODO item (consider how to filter
   them out in agenda)
 - notes/${title}.org <- notes/${title}.org. Knowledge graph / Zettelkasten / evergreen
-- recurrent/${title}.org <- recurrent events (group meetings, journal
+- meetings/${title}.org <- recurrent events (group meetings, journal
   clubs, etc)
 - people/${title}.org <- all personal info on people. This includes
   recruitment - then people's files can be linked from the
@@ -434,8 +434,8 @@ Default option is to split screen and open the link in another window.
 			    "#+title: ${title}\n")
 	 :immediate-finish t
 	 :unnarrowed t)
-	("c" "recurrent" plain "%?"
-	 :if-new (file+head "recurrent/${slug}.org"
+	("m" "meetings" plain "%?"
+	 :if-new (file+head "meetings/${slug}.org"
 			    "#+title: ${title}\n")
 	 :immediate-finish t
 	 :unnarrowed t)
