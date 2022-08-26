@@ -62,11 +62,13 @@
 #+end_src
 
 ** follow symlinks without asking
+
 #+begin_src emacs-lisp
   ;; (setq vc-follow-symlinks nil)
   (setq vc-follow-symlinks t)
   (setq vc-handled-backends nil)
 #+end_src
+
 ** remove messages buffer
 #+begin_src emacs-lisp
 
@@ -170,7 +172,8 @@ Comment customize modeline if using this.
     :init (doom-modeline-mode 1))
 #+end_src
 
-** save sesions between launches                                   
+** save sesions between launches
+
 #+begin_src emacs-lisp
 
   ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -200,6 +203,19 @@ Comment customize modeline if using this.
   ;; ;; Text mode is initial mode
   ;; (setq initial-major-mode 'org-mode)
 
+#+end_src
+
+** switching eng-ru in the background
+
+#+begin_src emacs-lisp
+  (set-input-method "ucs") ;; set the default input method on load, otherwise it can be nil and break the function below
+
+  (defun suslik/switch-language ()
+    (interactive (if (string-equal "russian-computer" default-input-method)
+	(set-input-method "ucs")
+	(set-input-method "russian-computer"))))
+
+  (global-set-key (kbd "C-c l") 'suslik/switch-language)
 #+end_src
 
 * theming / custom
@@ -428,9 +444,9 @@ Default option is to split screen and open the link in another window.
 #+begin_src emacs-lisp
   (setq org-roam-capture-templates
       '(
-	("n" "note" plain
+	("t" "topic" plain
 	 "%?"
-	 :if-new (file+head "notes/${slug}.org"
+	 :if-new (file+head "topics/${slug}.org"
 			    "#+title: ${title}\n")
 	 :immediate-finish t
 	 :unnarrowed t)
@@ -520,6 +536,7 @@ Slightly modified code from ref
   (add-hook 'org-mode-hook (lambda () (org-cite-csl-activate-render-all)))
 #+end_src
 * company
+
 #+begin_src emacs-lisp
   (use-package company
     :after lsp-mode
@@ -533,6 +550,7 @@ Slightly modified code from ref
   ;; (use-package company-box
   ;;   :hook (company-mode . company-box-mode))
 #+end_src
+
 * lsp-mode
 #+begin_src emacs-lisp
 
