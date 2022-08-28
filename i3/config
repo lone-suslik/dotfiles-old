@@ -117,8 +117,8 @@ bindsym $mod+Shift+l move right
 # enter fullscreen mode for the focused container
 bindsym $mod+Shift+f fullscreen toggle
 
-# change keyboard layout
-exec_always "setxkbmap -model pc104 -layout us,ru -variant ,, -option grp:alt_shift_toggle"
+# change keyboard layout / language
+#exec_always "setxkbmap -model pc104 -layout us,ru -variant ,, -option grp:alt_shift_toggle"
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
