@@ -855,8 +855,19 @@ This package enables an undo tree.
 
 * keymap
 
+This is a weird and a very personal key-binding that binds
+M-<ijkl> keys to navigation (similar to wasd but for the right hand).
+
+add paragraph navigation to M- ... keys
+
 #+begin_src emacs-lisp
-  ;;; this is an attempt to start re-defining emacs keymap
+  (require 'bind-key)
+
+  (bind-key* "M-i" 'previous-line)
+  (bind-key* "M-k" 'next-line)
+  (bind-key* "M-j" 'backward-char)
+  (bind-key* "M-l" 'forward-char)
+
 #+end_src
 
 * disabled
