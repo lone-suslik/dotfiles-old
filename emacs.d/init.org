@@ -829,6 +829,33 @@ Ess nees to be installed from source:
   (which-key-mode)
 #+end_src
 
+* vundo
+This package enables an undo tree.
+
+#+begin_src emacs-lisp
+  (use-package vundo
+    :commands (vundo)
+
+    :config
+    ;; Take less on-screen space.
+    (setq vundo-compact-display t)
+
+    ;; Better contrasting highlight.
+    (custom-set-faces
+     '(vundo-node ((t (:foreground "#808080"))))
+     '(vundo-stem ((t (:foreground "#808080"))))
+     '(vundo-highlight ((t (:foreground "#FFFF00")))))
+
+
+    (define-key vundo-mode-map (kbd "l") #'vundo-forward)
+    (define-key vundo-mode-map (kbd "j") #'vundo-backward)
+    (define-key vundo-mode-map (kbd "i") #'vundo-previous)
+    (define-key vundo-mode-map (kbd "k") #'vundo-next)
+    (define-key vundo-mode-map (kbd "q") #'vundo-quit))
+
+    (global-set-key (kbd "C-,") 'vundo)
+#+end_src
+
 * disabled
 ** make org use symbols instead of bullets
 
