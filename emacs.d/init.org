@@ -317,6 +317,9 @@ Comment customize modeline if using this.
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+
+  (global-set-key (kbd "C-c z") 'org-cycle-agenda-files)
+
 #+end_src
 
 ** ensure folding by default
@@ -833,27 +836,27 @@ Ess nees to be installed from source:
 This package enables an undo tree.
 
 #+begin_src emacs-lisp
-  (use-package vundo
-    :commands (vundo)
+  (require 'vundo)
+  (global-set-key (kbd "C-,") 'vundo)
 
-    :config
-    ;; Take less on-screen space.
-    (setq vundo-compact-display t)
+  (with-eval-after-load "org"
+    (define-key org-mode-map (kbd "C-,") #'vundo))
 
-    ;; Better contrasting highlight.
-    (custom-set-faces
-     '(vundo-node ((t (:foreground "#808080"))))
-     '(vundo-stem ((t (:foreground "#808080"))))
-     '(vundo-highlight ((t (:foreground "#FFFF00")))))
+  (define-key vundo-mode-map (kbd "l") #'vundo-forward)
+  (define-key vundo-mode-map (kbd "j") #'vundo-backward)
+  (define-key vundo-mode-map (kbd "i") #'vundo-previous)
+  (define-key vundo-mode-map (kbd "k") #'vundo-next)
+  (define-key vundo-mode-map (kbd "q") #'vundo-quit)
 
 
-    (define-key vundo-mode-map (kbd "l") #'vundo-forward)
-    (define-key vundo-mode-map (kbd "j") #'vundo-backward)
-    (define-key vundo-mode-map (kbd "i") #'vundo-previous)
-    (define-key vundo-mode-map (kbd "k") #'vundo-next)
-    (define-key vundo-mode-map (kbd "q") #'vundo-quit))
 
-    (global-set-key (kbd "C-,") 'vundo)
+
+#+end_src
+
+* keymap
+
+#+begin_src emacs-lisp
+  ;;; this is an attempt to start re-defining emacs keymap
 #+end_src
 
 * disabled
