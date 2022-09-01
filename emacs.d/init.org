@@ -447,27 +447,32 @@ Default option is to split screen and open the link in another window.
 	("t" "topic" plain
 	 "%?"
 	 :if-new (file+head "topics/${slug}.org"
-			    "#+title: ${title}\n")
+			    "#+title: ${title}\n"
+			    "#+CATEGORY: Topics")
 	 :immediate-finish t
 	 :unnarrowed t)
 	("m" "meetings" plain "%?"
 	 :if-new (file+head "meetings/${slug}.org"
-			    "#+title: ${title}\n")
+			    "#+title: ${title}\n"
+			    "#+CATEGORY: Meetings")			    
 	 :immediate-finish t
 	 :unnarrowed t)
 	("p" "person" plain "%?"
 	 :if-new (file+head "people/${slug}.org"
-			    "#+title: ${title}\n")
+			    "#+title: ${title}\n"
+			    "#+CATEGORY: People")			    
 	 :immediate-finish t
 	 :unnarrowed t)
 	("j" "project" plain "%?"
-	 :if-new (file+head "people/${slug}.org"
-			    "#+title: ${title}\n")
+	 :if-new (file+head "projects/${slug}.org"
+			    "#+title: ${title}\n"
+			    "#+CATEGORY: Projects")
 	 :immediate-finish t
 	 :unnarrowed t)		
 	("w" "writing" plain "%?"
 	 :if-new (file+head "writings/${slug}.org"
-			    "#+title: ${title}\n")
+			    "#+title: ${title}\n"
+			    "#+CATEGORY: Writing")
 	 :immediate-finish t
 	 :unnarrowed t)))
 #+end_src
