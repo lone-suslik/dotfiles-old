@@ -322,24 +322,34 @@ Comment customize modeline if using this.
   ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
 
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
-				 (file+headline "~/Documents/org/inbox.org" "Tasks")
+				 (file+headline "~/Documents/org/roam/inbox.org" "Tasks")
 				 "* TODO %i%?")
+				("n" "fleeting note" entry
+				 (file+headline "~/Documents/org/roam/notes.org" "Tasks")
+			       "* TODO %U\n%?")
 				("m" "Morning planning" entry
 				 (file+headline "~/Documents/org/morning.org" "Tasks")
 			       "* %t %i%?")))
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+
+  (global-set-key (kbd "C-c z") 'org-cycle-agenda-files)
+
 #+end_src
 
 ** ensure folding by default
+
 #+begin_src emacs-lisp
   (setq org-startup-folded t)
 #+end_src
+
 ** code editing in Babel blocks
+
 #+begin_src
   (setq org-src-tab-acts-natively t)
 #+end_src
+
 ** configure Babel languages
 #+begin_src emacs-lisp
   (org-babel-do-load-languages
@@ -350,14 +360,18 @@ Comment customize modeline if using this.
 #+end_src
 
 ** allow images in emacs buffer
+
 #+begin_src emacs-lisp
   (setq org-startup-with-inline-images t)
   (setq org-redisplay-inline-images t)
 #+end_src
+
 ** change behaviour of org-goto
+
 #+begin_src emacs-lisp
   (setq org-goto-interface (quote outline-path-completion))
 #+end_src
+
 ** org-agenda
 #+begin_src emacs-lisp
 
@@ -432,9 +446,11 @@ Default option is to split screen and open the link in another window.
   books I read. 1 file per reference. If it is a book I want to read,
   just add a reference and create a TODO item (consider how to filter
   them out in agenda)
-- notes/${title}.org <- notes/${title}.org. Knowledge graph / Zettelkasten / evergreen
-- meetings/${title}.org <- recurrent events (group meetings, journal
-  clubs, etc)
+- topics/${topics}.org: Knowledge graph / Zettelkasten / permanent
+  notes on various topics
+- notes/${title}.org <- fleeting notes
+- recurrent/${title}.org <- recurrent events (group meetings, journal
+  clubs, 1:1s)
 - people/${title}.org <- all personal info on people. This includes
   recruitment - then people's files can be linked from the
   recruitment campaign page.
@@ -524,13 +540,17 @@ Slightly modified code from ref
 	'((org-roam-backlinks-section :unique t)
 	  org-roam-reflinks-section))
 #+end_src
+
 ** org-journal
+
 #+begin_src emacs-lisp
   (require 'org-journal)
   (setq org-journal-dir "~/Documents/org/org-journal/")
   (setq org-journal-file-type 'monthly)
 #+end_src
+
 ** org-cite-csl-activate
+
 #+begin_src emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/user-libraries/org-cite-csl-activate")
 
@@ -540,6 +560,7 @@ Slightly modified code from ref
   (add-hook 'org-mode-hook (lambda () (cursor-sensor-mode 1)))
   (add-hook 'org-mode-hook (lambda () (org-cite-csl-activate-render-all)))
 #+end_src
+
 * company
 
 #+begin_src emacs-lisp
@@ -556,7 +577,8 @@ Slightly modified code from ref
   ;;   :hook (company-mode . company-box-mode))
 #+end_src
 
-* lsp-mode
+* lsp
+** lsp-mode
 #+begin_src emacs-lisp
 
     ;; -----------------------
@@ -610,8 +632,6 @@ Slightly modified code from ref
      ;; 			 (require 'lsp-pyright)
      ;; 			 (lsp))))  ; or lsp-deferred
 
-
-
 ** change gc settings
 Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 
@@ -623,6 +643,45 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
   (setq read-process-output-max (* 1024 1024))
 #+end_src
 
+* eglot
+# #+begin_src emacs-lisp
+#     (require 'eglot)
+
+#     (defgroup eglot-grammarly nil
+#       "Settings for the Grammarly Language Server.
+
+#     Link: https://github.com/znck/grammarly"
+#       :group 'eglot
+#       :link '(url-link "https://github.com/emacs-grammarly/eglot-grammarly"))
+
+#     (defcustom eglot-grammarly-active-modes
+#       '(text-mode latex-mode org-mode markdown-mode)
+#       "List of major mode that work with Grammarly."
+#       :type 'list
+#       :group 'eglot-grammarly)
+
+#     (defun eglot-grammarly--server-command ()
+#       "Generate startup command for Grammarly language server."
+#       (list 'eglot-grammarly-server "grammarly-languageserver" "--stdio"))
+
+#     (add-to-list 'eglot-server-programs
+# 		 `(,eglot-grammarly-active-modes . ,(eglot-grammarly--server-command)))
+
+#     (defclass eglot-grammarly-server (eglot-lsp-server) ()
+#       :documentation "A custom class for grammarly langserver.")
+
+#     (defconst eglot-grammarly-client-id "client_BaDkMgx4X19X9UxxYRCXZo"
+#       "Client ID is required for language server's activation.")
+
+#     (cl-defmethod eglot-initialization-options ((server eglot-grammarly-server))
+#       "Passes through required grammarly initialization options"
+# 	(list :clientId eglot-grammarly-client-id))
+
+#   (provide 'eglot-grammarly)
+#   (add-hook 'text-mode-hook (lambda ()
+#          		     (require 'eglot-grammarly)
+#           		     (call-interactively #'eglot)))
+# #+end_src
 * projectile
 #+begin_src emacs-lisp
   ;; ---------------------
@@ -643,11 +702,6 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 Ess nees to be installed from source:
 
 #+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; --------- R ---------
-  ;; ---------------------
-
   (add-to-list 'load-path "~/.emacs.d/user-libraries/ess/lisp")
   (load "ess-autoloads")
   (require 'ess-r-mode)
@@ -797,6 +851,44 @@ Ess nees to be installed from source:
 #+begin_src emacs-lisp
   (use-package which-key)
   (which-key-mode)
+#+end_src
+
+* vundo
+This package enables an undo tree.
+
+#+begin_src emacs-lisp
+  (require 'vundo)
+  (global-set-key (kbd "C-,") 'vundo)
+
+  (with-eval-after-load "org"
+    (define-key org-mode-map (kbd "C-,") #'vundo))
+
+  (define-key vundo-mode-map (kbd "l") #'vundo-forward)
+  (define-key vundo-mode-map (kbd "j") #'vundo-backward)
+  (define-key vundo-mode-map (kbd "i") #'vundo-previous)
+  (define-key vundo-mode-map (kbd "k") #'vundo-next)
+  (define-key vundo-mode-map (kbd "q") #'vundo-quit)
+
+
+
+
+#+end_src
+
+* keymap
+
+This is a weird and a very personal key-binding that binds
+M-<ijkl> keys to navigation (similar to wasd but for the right hand).
+
+add paragraph navigation to M- ... keys
+
+#+begin_src emacs-lisp
+  (require 'bind-key)
+
+  (bind-key* "M-i" 'previous-line)
+  (bind-key* "M-k" 'next-line)
+  (bind-key* "M-j" 'backward-char)
+  (bind-key* "M-l" 'forward-char)
+
 #+end_src
 
 * disabled
