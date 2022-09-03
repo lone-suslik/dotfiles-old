@@ -115,7 +115,7 @@
   ;; ---------------------
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  ;(toggle-scroll-bar -1)
+  (toggle-scroll-bar -1)
 #+end_src
 
 ** set custom emacs backup locations
@@ -304,6 +304,7 @@ Comment customize modeline if using this.
   ;;                            ("~/Documents/Org/someday.org" :level . 1)
   ;;                            ("~/Documents/Org/tickler.org" :maxlevel . 2)
   ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
+  (setq org-archive-location "~/Documents/org/archive/%s_archive::")
 
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
 				 (file+headline "~/Documents/org/roam/inbox.org" "Tasks")
