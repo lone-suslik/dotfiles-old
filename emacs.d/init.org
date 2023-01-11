@@ -336,7 +336,7 @@ Comment customize modeline if using this.
   (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
 
   (global-set-key (kbd "C-c z") 'org-cycle-agenda-files)
-
+  (global-set-key (kbd "C-c C-.") 'org-time-stamp-inactive)
 #+end_src
 
 ** ensure folding by default
@@ -459,39 +459,39 @@ Default option is to split screen and open the link in another window.
 - writing/${title}.org <- my short and long-form writings
 	      
 #+begin_src emacs-lisp
-  (setq org-roam-capture-templates
-      '(
-	("t" "topic" plain
-	 "%?"
-	 :if-new (file+head "topics/${slug}.org"
-			    "#+title: ${title}\n"
-			    "#+CATEGORY: Topics")
-	 :immediate-finish t
-	 :unnarrowed t)
-	("m" "meetings" plain "%?"
-	 :if-new (file+head "meetings/${slug}.org"
-			    "#+title: ${title}\n"
-			    "#+CATEGORY: Meetings")			    
-	 :immediate-finish t
-	 :unnarrowed t)
-	("p" "person" plain "%?"
-	 :if-new (file+head "people/${slug}.org"
-			    "#+title: ${title}\n"
-			    "#+CATEGORY: People")			    
-	 :immediate-finish t
-	 :unnarrowed t)
-	("j" "project" plain "%?"
-	 :if-new (file+head "projects/${slug}.org"
-			    "#+title: ${title}\n"
-			    "#+CATEGORY: Projects")
-	 :immediate-finish t
-	 :unnarrowed t)		
-	("w" "writing" plain "%?"
-	 :if-new (file+head "writings/${slug}.org"
-			    "#+title: ${title}\n"
-			    "#+CATEGORY: Writing")
-	 :immediate-finish t
-	 :unnarrowed t)))
+      (setq org-roam-capture-templates
+	  '(
+	    ("t" "topic" plain
+	     "%?"
+	     :if-new (file+head "topics/${slug}.org"
+				"#+title: ${title}\n
+#+CATEGORY: Topics")
+	     :immediate-finish t
+	     :unnarrowed t)
+	    ("m" "meetings" plain "%?"
+	     :if-new (file+head "meetings/${slug}.org"
+				"#+title: ${title}\n
+#+CATEGORY: Topics")
+	     :immediate-finish t
+	     :unnarrowed t)
+	    ("p" "person" plain "%?"
+	     :if-new (file+head "people/${slug}.org"
+				"#+title: ${title}\n
+#+CATEGORY: Topics")				
+	     :immediate-finish t
+	     :unnarrowed t)
+	    ("j" "project" plain "%?"
+	     :if-new (file+head "projects/${slug}.org"
+				"#+title: ${title}\n
+#+CATEGORY: Projects")
+	     :immediate-finish t
+	     :unnarrowed t)		
+	    ("w" "writing" plain "%?"
+	     :if-new (file+head "writings/${slug}.org"
+				"#+title: ${title}\n
+#+CATEGORY: Writing")
+	     :immediate-finish t
+	     :unnarrowed t)))
 #+end_src
 
 *** add 'type' propoperty and show file type in completion buffer
