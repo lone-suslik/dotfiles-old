@@ -314,28 +314,17 @@ Comment customize modeline if using this.
   (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c t") 'org-insert-structure-template)
-  ;; (global-set-key (kbd "C-c C-w") 'org-refile-targets)
-
-  ;; (setq org-refile-targets '(("~/Documents/Org/todo.org" :maxlevel . 3)
-  ;;                            ("~/Documents/Org/someday.org" :level . 1)
-  ;;                            ("~/Documents/Org/tickler.org" :maxlevel . 2)
-  ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
 
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
-				 (file+headline "~/Documents/org/roam/inbox.org" "Tasks")
+				 (file+headline "~/Documents/org/inbox.org" "Tasks")
 				 "* TODO %i%?")
-				("n" "fleeting note" entry
-				 (file+headline "~/Documents/org/roam/notes.org" "Tasks")
-			       "* TODO %U\n%?")
-				("m" "Morning planning" entry
-				 (file+headline "~/Documents/org/morning.org" "Tasks")
-			       "* %t %i%?")))
+				("n" "note" entry
+				 (file+headline "~/Documents/org/notes.org" "Tasks")
+				 "* TODO %U\n%?")))
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
-
   (global-set-key (kbd "C-c z") 'org-cycle-agenda-files)
-
 #+end_src
 
 ** ensure folding by default
