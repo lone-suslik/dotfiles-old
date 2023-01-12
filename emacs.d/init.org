@@ -323,8 +323,6 @@ Comment customize modeline if using this.
   ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
   (setq org-archive-location "~/Documents/org/archive/%s_archive::")
 
-
-
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
 				 (file+headline "~/Documents/org/inbox.org" "Tasks")
 				 "* TODO %i%?")
@@ -380,7 +378,6 @@ Comment customize modeline if using this.
   ;; ---------------------
   (setq org-directory (quote "~/Documents/org"))
   (setq org-agenda-files '(org-directory))
-
   (setq org-agenda-files (directory-files-recursively org-directory "org$"))
 
 #+end_src
@@ -421,7 +418,7 @@ Comment customize modeline if using this.
   (global-set-key (kbd "C-c i") 'org-roam-node-insert)
   (global-set-key (kbd "C-c s") 'org-roam-capture)
   (global-set-key (kbd "C-c b") 'org-roam-buffer-toggle)
-
+  (global-set-key (kbd "C-c j") 'org-roam-refile)
   (define-key org-roam-mode-map (kbd "C-c C-o") 'org-open-at-point)
 #+end_src
 
@@ -539,6 +536,15 @@ Slightly modified code from ref
   (setq org-roam-mode-sections
 	'((org-roam-backlinks-section :unique t)
 	  org-roam-reflinks-section))
+#+end_src
+
+** roam and org tags
+
+#+begin_src emacs-lisp
+  (setq org-tag-alist '((:startgroup . nil)
+                      ("@az" . ?a) ("@work" . ?w) ("@personsal" . ?p)
+                      (:endgroup . nil)
+                      ("@urgent" . ?u) ("@important" . ?i)))
 #+end_src
 
 ** org-journal
