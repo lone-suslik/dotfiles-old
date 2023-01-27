@@ -310,13 +310,6 @@ Comment customize modeline if using this.
   (setq org-log-done t)
   (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
-  ;; setup keys
-  (global-set-key (kbd "C-c c") 'org-capture)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c t") 'org-insert-structure-template)
-
-  ;; (global-set-key (kbd "C-c C-w") 'org-refile-targets)
-
   ;; (setq org-refile-targets '(("~/Documents/Org/todo.org" :maxlevel . 3)
   ;;                            ("~/Documents/Org/someday.org" :level . 1)
   ;;                            ("~/Documents/Org/tickler.org" :maxlevel . 2)
@@ -327,13 +320,43 @@ Comment customize modeline if using this.
 				 (file+headline "~/Documents/org/inbox.org" "Tasks")
 				 "* TODO %i%?")
 				("n" "note" entry
-				 (file+headline "~/Documents/org/notes.org" "Tasks")
-				 "* TODO %U\n%?")))
+				 (file+headline "~/Documents/org/notes.org" "Notes")
+				 "* %U\n%?")))
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+#+end_src
+
+** org-mode keybindings
+
+#+begin_src emacs-lisp
+  ;; setup keys
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c t") 'org-insert-structure-template)
   (global-set-key (kbd "C-c z") 'org-cycle-agenda-files)
   (global-set-key (kbd "C-c C-.") 'org-time-stamp-inactive)
+  (global-set-key (kbd "C-c k") 'org-set-tags-command)
+  ;; (global-set-key (kbd "C-c C-w") 'org-refile-targets)  
+#+end_src
+
+** org-mode alignment of tags
+
+#+begin_src emacs-lisp
+  (setq org-tags-column -140)
+#+end_src
+
+** org-agenda alignment of tags
+
+#+begin_src emacs-lisp
+  (setq org-agenda-tags-column -140)
+#+end_src
+
+** org-agenda column-mode
+
+#+begin_src emacs-lisp
+  (setq org-agenda-view-columns-initially t)
+  (setq org-columns-default-format "%20CATEGORY %TODO %80ITEM %3PRIORITY %TAGS")
 #+end_src
 
 ** ensure folding by default
