@@ -286,7 +286,7 @@ Comment customize modeline if using this.
 
   (use-package citar
     :custom
-    (org-cite-global-bibliography '("~/Documents/org/library.bib"))    
+    (org-cite-global-bibliography '("~/documents/org/library.bib"))    
     (org-cite-insert-processor 'citar)
     (org-cite-follow-processor 'citar)
     (org-cite-activate-processor 'citar)
@@ -314,13 +314,13 @@ Comment customize modeline if using this.
   ;;                            ("~/Documents/Org/someday.org" :level . 1)
   ;;                            ("~/Documents/Org/tickler.org" :maxlevel . 2)
   ;; 			   ("~/Documents/Org/meetings.org" :maxlevel . 5)))
-  (setq org-archive-location "~/Documents/org/archive/%s_archive::")
+  (setq org-archive-location "~/documents/org/archive/%s_archive::")
 
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
-				 (file+headline "~/Documents/org/inbox.org" "Tasks")
+				 (file+headline "~/documents/org/inbox.org" "Tasks")
 				 "* TODO %i%?")
 				("n" "note" entry
-				 (file+headline "~/Documents/org/notes.org" "Notes")
+				 (file+headline "~/documents/org/notes.org" "Notes")
 				 "* %U\n%?")))
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
@@ -399,7 +399,7 @@ Comment customize modeline if using this.
   ;; ---------------------
   ;; ------ agenda -------
   ;; ---------------------
-  (setq org-directory (quote "~/Documents/org"))
+  (setq org-directory (quote "~/documents/org"))
   (setq org-agenda-files '(org-directory))
   (setq org-agenda-files (directory-files-recursively org-directory "org$"))
 
@@ -422,14 +422,14 @@ Comment customize modeline if using this.
   ;; ----- ORG-roam ------ 
   ;; ---------------------
   (require 'org-roam)
-  (setq citar-notes-paths '("~/Documents/org/roam/references"))
+  (setq citar-notes-paths '("~/documents/org/roam/references"))
   (setq citar-file-note-extensions '("org"))
 #+end_src
 
 *** org-roam directory & basic configs
 #+begin_src emacs-lisp  
-  (setq org-roam-directory (file-truename "~/Documents/org/roam"))
-  (setq org-roam-db-location "~/Documents/org/roam/roam.db")
+  (setq org-roam-directory (file-truename "~/documents/org/roam"))
+  (setq org-roam-db-location "~/documents/org/roam/roam.db")
   (org-roam-db-autosync-mode)
   (setq org-roam-completion-everywhere t)
 #+end_src
@@ -573,9 +573,9 @@ Slightly modified code from ref
 ** org-journal
 
 #+begin_src emacs-lisp
-  (require 'org-journal)
-  (setq org-journal-dir "~/Documents/org/org-journal/")
-  (setq org-journal-file-type 'monthly)
+;;  (require 'org-journal)
+;;  (setq org-journal-dir "~/documents/org/org-journal/")
+;;  (setq org-journal-file-type 'monthly)
 #+end_src
 
 ** org-cite-csl-activate
