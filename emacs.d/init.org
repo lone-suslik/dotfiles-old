@@ -170,6 +170,8 @@ Comment customize modeline if using this.
   (use-package doom-modeline
     :ensure t
     :init (doom-modeline-mode 1))
+
+  (setq doom-modeline-vcs-max-length 12)
 #+end_src
 
 ** save sesions between launches
@@ -346,19 +348,6 @@ Comment customize modeline if using this.
   (setq org-tags-column -140)
 #+end_src
 
-** org-agenda alignment of tags
-
-#+begin_src emacs-lisp
-  (setq org-agenda-tags-column -140)
-#+end_src
-
-** org-agenda column-mode
-
-#+begin_src emacs-lisp
-  (setq org-agenda-view-columns-initially t)
-  (setq org-columns-default-format "%20CATEGORY %TODO %80ITEM %3PRIORITY %TAGS")
-#+end_src
-
 ** ensure folding by default
 
 #+begin_src emacs-lisp
@@ -394,15 +383,42 @@ Comment customize modeline if using this.
 #+end_src
 
 ** org-agenda
-#+begin_src emacs-lisp
 
-  ;; ---------------------
-  ;; ------ agenda -------
-  ;; ---------------------
+Setup the agenda directory. I use ~/Documents/org in all my systems.
+
+#+begin_src emacs-lisp
   (setq org-directory (quote "~/Documents/org"))
   (setq org-agenda-files '(org-directory))
   (setq org-agenda-files (directory-files-recursively org-directory "org$"))
+#+end_src
 
+*** custom org-agenda view for work
+
+#+begin_src emacs-lisp
+  (setq org-agenda-custom-commands
+	'(("w"
+	   "work agenda"
+	   ((agenda ""
+		    ((org-agenda-span 2)))
+	    (todo "TODO"
+		  ((org-agenda-overriding-header "Todos")
+		   (org-agenda-sorting-strategy '(tag-down))))
+	    (todo "WAITING"
+		  ((org-agenda-overriding-header "Blocked"))))
+	   ((org-agenda-tag-filter-preset '("-@personal" "-@personsal"))))))
+#+end_src
+
+*** org-agenda column-mode
+
+#+begin_src emacs-lisp
+  ;; (setq org-agenda-view-columns-initially f)
+  ;; (setq org-columns-default-format "%20CATEGORY %TODO %80ITEM %3PRIORITY %TAGS")
+#+end_src
+
+*** show tags in column mode in agenda
+
+#+begin_src emacs-lisp
+  (setq org-agenda-tags-column -140)
 #+end_src
 
 ** bibtex completion display formats
@@ -461,6 +477,9 @@ Default option is to split screen and open the link in another window.
 #+end_src
 
 *** org-roam capture templates
+:PROPERTIES:
+:ORDERED:  t
+:END:
 
 - references/${title}.org. <- References go here. These are papers or
   books I read. 1 file per reference. If it is a book I want to read,
@@ -483,32 +502,27 @@ Default option is to split screen and open the link in another window.
 	  ("t" "topic" plain
 	   "%?"
 	   :if-new (file+head "topics/${slug}.org"
-			      "#+title: ${title}\n
-#+CATEGORY: Topics")
+			      "#+title: ${title}")
 	   :immediate-finish t
 	   :unnarrowed t)
 	  ("m" "meetings" plain "%?"
 	   :if-new (file+head "meetings/${slug}.org"
-			      "#+title: ${title}\n
-#+CATEGORY: Meetings")			    
+			      "#+title: ${title}")			    
 	   :immediate-finish t
 	   :unnarrowed t)
 	  ("p" "person" plain "%?"
 	   :if-new (file+head "people/${slug}.org"
-			      "#+title: ${title}\n
-#+CATEGORY: People")			    
+			      "#+title: ${title}")			    
 	   :immediate-finish t
 	   :unnarrowed t)
 	  ("j" "project" plain "%?"
 	   :if-new (file+head "projects/${slug}.org"
-			      "#+title: ${title}\n
-#+CATEGORY: Projects")
+			      "#+title: ${title}")
 	   :immediate-finish t
 	   :unnarrowed t)		
 	  ("w" "writing" plain "%?"
 	   :if-new (file+head "writings/${slug}.org"
-			      "#+title: ${title}\n
-#+CATEGORY: Writing")
+			      "#+title: ${title}")
 	   :immediate-finish t
 	   :unnarrowed t)))
 #+end_src
@@ -561,11 +575,12 @@ Slightly modified code from ref
 	  org-roam-reflinks-section))
 #+end_src
 
+
 ** roam and org tags
 
 #+begin_src emacs-lisp
   (setq org-tag-alist '((:startgroup . nil)
-                      ("@az" . ?a) ("@work" . ?w) ("@personsal" . ?p)
+                      ("@az" . ?a) ("@work" . ?w) ("@personal" . ?p)
                       (:endgroup . nil)
                       ("@urgent" . ?u) ("@important" . ?i)))
 #+end_src
