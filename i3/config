@@ -20,7 +20,7 @@ exec_always --no-startup-id "bash $HOME/.config/i3/polybar.sh"
 # Startup applications #
 ########################
 #exec_always --no-startup-id i3-msg 'workspace 9; exec /opt/piavpn/bin/pia-client'
-#exec_always --no-startup-id feh --bg-scale $HOME/Pictures/Wallpapers/SDxOxvO.png # set up wallpaper
+exec_always --no-startup-id feh --bg-scale $HOME/documents/wallpapers/wallpaper-main.png # set up wallpaper
 
 #exec --no-startup-id i3-msg 'workspace 1; exec kitty mc ~/Documents ~'
 #exec --no-startup-id i3-msg 'workspace 1; exec emacs'

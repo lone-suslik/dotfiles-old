@@ -129,38 +129,38 @@ files surrounded by #) in a specified directory
 #+end_src
 
 ** customize modeline
-# #+begin_src emacs-lisp
-#   ;;;;;;;;;;;;;;;;;;;;;;;;
-#   ;;;;;;; modeline ;;;;;;;
-#   ;;;;;;;;;;;;;;;;;;;;;;;;
-#   (require 'diminish)
-#   (eval-after-load "projectile" '(diminish 'projectile-mode " π"))
-#   (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
-#   (eval-after-load "company" '(diminish 'company-mode " c"))
-#   (diminish 'visual-line-mode " λ")
+#+begin_src emacs-lisp
+  ;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;; modeline ;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;
+  (require 'diminish)
+  (eval-after-load "projectile" '(diminish 'projectile-mode " 󰑣"))
+  (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
+  (eval-after-load "company" '(diminish 'company-mode " c"))
+  (diminish 'visual-line-mode " λ")
 
-#   (setq-default header-line-format
-# 		(quote
-# 		 (
-# 		  "       "
-# 		  mode-line-buffer-identification
-# 		  ""
-# 		  mode-line-modes
-# 		  )))
-#   (setq-default mode-line-format nil)
+  (setq-default mode-line-format
+		(quote
+		 (
+		  "  "
+		  mode-line-buffer-identification
+		  ""		  
+		  )))
+  (setq-default header-line-format nil)
 
-# #+end_src
+#+end_src
 
+** use powerline
 ** use doom modeline
 Comment customize modeline if using this.
 
-#+begin_src emacs-lisp
-  (use-package doom-modeline
-    :ensure t
-    :init (doom-modeline-mode 1))
+# #+begin_src emacs-lisp
+#   (use-package doom-modeline
+#     :ensure t
+#     :init (doom-modeline-mode 1))
 
-  (setq doom-modeline-vcs-max-length 12)
-#+end_src
+#   (setq doom-modeline-vcs-max-length 12)
+# #+end_src
 
 ** save sesions between launches
 

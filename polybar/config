@@ -18,17 +18,20 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-;background =  #282a36
-;background-alt = #444
+background = #272822
+background-alt = #444
 ;foreground = ${xrdb:color7:#222}
-;foreground = #dfdfdf
-;foreground-alt = #555
-;primary = #ffb52a
-;secondary = #e60053
-;alert = #bd2c40
+foreground = #f8f8f2
+;#66d9ef
+;#ae81ff
+;#ae81ff
+foreground-alt = #555
+primary = #ae81ff
+;#ffb52a
+secondary = #e60053
+alert = #bd2c40
 
 [bar/main]
-
 width = 100%
 height = 35
 
@@ -41,27 +44,25 @@ foreground = ${colors.foreground}
 line-size = 0
 line-color = #f00
 
-
 border-size = 0
 border-color = #00000000
 
 padding-left = 1
 padding-right = 1
 
-
 module-margin-left = 0
 module-margin-right = 0
 
 font-0 = "Hasklug Nerd Font Mono:style=Bold; 4"
+font-1 = "Hasklug Nerd Font Mono:style=Bold:pixelsize=25; 7"
 
-modules-left = i3
-modules-center = date
-;modules-right =  date 
+modules-left = date
+; modules-center = i3
+modules-right = pulseaudio-control-output arrow
 
-tray-position = right
+tray-position = center
+tray-background = ${colors.background}
 ;tray-padding = 2
-
-
 cursor-click = pointer
 cursor-scroll = ns-resize
 
@@ -107,15 +108,14 @@ label-separator = 
 type = internal/date
 interval = 1
 
-date = %B, %d
+date = %b, %d
 
 time = %H:%M:%S
-
 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
-label =  "%date% [%time%]"
+label = "%{T2}󰭦%{O7}%{T-}%date% %{T2}%{T-}%{O7}%time%"
 
 [settings]
 screenchange-reload = true
@@ -129,4 +129,14 @@ pseudo-transparency = true
 margin-top = 10
 margin-bottom = 10
 
-; vim:ft=dosini
+[module/pulseaudio-control-output]
+type = custom/script
+tail = true
+
+ 
+exec = pulseaudio-control --format '%{T2}$VOL_ICON%{T-} ${VOL_LEVEL}%  $ICON_NODE $NODE_NICKNAME' --icons-volume ", " --icon-muted "" --node-nicknames-from "device.description"  --node-nickname "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8UQVBY1909268-00.analog-stereo:%{T2}󰴸%{T-}%{O8}Speakers" --node-nickname "alsa_output.pci-0000_09_00.1.hdmi-stereo-extra2:%{T2} %{T-}%{O-7}TV" listen
+click-right = exec pavucontrol &
+click-left = pulseaudio-control togmute
+click-middle = pulseaudio-control --node-blacklist "alsa_output.pci-0000_0b_00.4.iec958-stereo" next-node
+scroll-up = pulseaudio-control --volume-max 130 up
+scroll-down = pulseaudio-control --volume-max 130 down
