@@ -56,7 +56,7 @@ module-margin-right = 0
 font-0 = "Hasklug Nerd Font Mono:style=Bold; 4"
 font-1 = "Hasklug Nerd Font Mono:style=Bold:pixelsize=25; 7"
 
-modules-left = date
+modules-left = date dbx
 ; modules-center = i3
 modules-right = pulseaudio-control-output arrow
 
@@ -65,6 +65,13 @@ tray-background = ${colors.background}
 ;tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[module/dbx]
+; relies on dbxcli tool
+type = custom/script
+exec = dbxsli
+format = <label>
+label = ""
 
 [module/i3]
 type = internal/i3
@@ -109,7 +116,6 @@ type = internal/date
 interval = 1
 
 date = %b, %d
-
 time = %H:%M:%S
 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -133,8 +139,7 @@ margin-bottom = 10
 type = custom/script
 tail = true
 
- 
-exec = pulseaudio-control --format '%{T2}$VOL_ICON%{T-} ${VOL_LEVEL}%  $ICON_NODE $NODE_NICKNAME' --icons-volume ", " --icon-muted "" --node-nicknames-from "device.description"  --node-nickname "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8UQVBY1909268-00.analog-stereo:%{T2}󰴸%{T-}%{O8}Speakers" --node-nickname "alsa_output.pci-0000_09_00.1.hdmi-stereo-extra2:%{T2} %{T-}%{O-7}TV" listen
+exec = pulseaudio-control --format '$ICON_NODE $NODE_NICKNAME  %{T2}$VOL_ICON%{T-} ${VOL_LEVEL}%' --icons-volume ", " --icon-muted "" --node-nicknames-from "device.description"  --node-nickname "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8UQVBY1909268-00.analog-stereo:%{T2}󰴸%{T-}%{O8}" --node-nickname "alsa_output.pci-0000_09_00.1.hdmi-stereo-extra2:%{T2} %{T-}%{O-7}" listen
 click-right = exec pavucontrol &
 click-left = pulseaudio-control togmute
 click-middle = pulseaudio-control --node-blacklist "alsa_output.pci-0000_0b_00.4.iec958-stereo" next-node
