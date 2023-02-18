@@ -55,23 +55,31 @@ module-margin-right = 0
 
 font-0 = "Hasklug Nerd Font Mono:style=Bold; 4"
 font-1 = "Hasklug Nerd Font Mono:style=Bold:pixelsize=25; 7"
+font-2 = "Hasklug Nerd Font Mono:style=Bold:pixelsize=20; 6"
 
-modules-left = date dbx
+modules-left = pia dropbox
 ; modules-center = i3
-modules-right = pulseaudio-control-output arrow
+modules-right = pulseaudio-control-output date 
 
-tray-position = center
+tray-position = none
 tray-background = ${colors.background}
 ;tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[module/dbx]
+[module/dropbox]
 ; relies on dbxcli tool
 type = custom/script
-exec = dbxsli
+exec = bash $HOME/documents/programming/dotfiles/polybar/dropbox.sh
 format = <label>
-label = ""
+label = "%output%%{O13}"
+
+[module/pia]
+; relies on dbxcli tool
+type = custom/script
+exec = bash $HOME/documents/programming/dotfiles/polybar/pia.sh
+format = <label>
+label = "%output%%{O13}"
 
 [module/i3]
 type = internal/i3
@@ -121,7 +129,7 @@ time = %H:%M:%S
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
-label = "%{T2}󰭦%{O7}%{T-}%date% %{T2}%{T-}%{O7}%time%"
+label = "%{T2}󰭦%{O7}%{T-}%date% %{O2}%{T2}%{T-}%{O7}%time%"
 
 [settings]
 screenchange-reload = true
@@ -139,7 +147,7 @@ margin-bottom = 10
 type = custom/script
 tail = true
 
-exec = pulseaudio-control --format '$ICON_NODE $NODE_NICKNAME  %{T2}$VOL_ICON%{T-} ${VOL_LEVEL}%' --icons-volume ", " --icon-muted "" --node-nicknames-from "device.description"  --node-nickname "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8UQVBY1909268-00.analog-stereo:%{T2}󰴸%{T-}%{O8}" --node-nickname "alsa_output.pci-0000_09_00.1.hdmi-stereo-extra2:%{T2} %{T-}%{O-7}" listen
+exec = pulseaudio-control --format '$ICON_NODE $NODE_NICKNAME %{O-16} %{T2}$VOL_ICON%{T-} ${VOL_LEVEL}% %{O4}' --icons-volume ", " --icon-muted "" --node-nicknames-from "device.description"  --node-nickname "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8UQVBY1909268-00.analog-stereo:%{T2}󰴸%{T-}%{O8}" --node-nickname "alsa_output.pci-0000_09_00.1.hdmi-stereo-extra2:%{T2} %{T-}%{O-10}" listen
 click-right = exec pavucontrol &
 click-left = pulseaudio-control togmute
 click-middle = pulseaudio-control --node-blacklist "alsa_output.pci-0000_0b_00.4.iec958-stereo" next-node
