@@ -129,38 +129,38 @@ files surrounded by #) in a specified directory
 #+end_src
 
 ** customize modeline
-#+begin_src emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;; modeline ;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;
-  (require 'diminish)
-  (eval-after-load "projectile" '(diminish 'projectile-mode " 󰑣"))
-  (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
-  (eval-after-load "company" '(diminish 'company-mode " c"))
-  (diminish 'visual-line-mode " λ")
+# #+begin_src emacs-lisp
+#   ;;;;;;;;;;;;;;;;;;;;;;;;
+#   ;;;;;;; modeline ;;;;;;;
+#   ;;;;;;;;;;;;;;;;;;;;;;;;
+#   (require 'diminish)
+#   (eval-after-load "projectile" '(diminish 'projectile-mode " 󰑣"))
+#   (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
+#   (eval-after-load "company" '(diminish 'company-mode " c"))
+#   (diminish 'visual-line-mode " λ")
 
-  (setq-default mode-line-format
-		(quote
-		 (
-		  "  "
-		  mode-line-buffer-identification
-		  ""		  
-		  )))
-  (setq-default header-line-format nil)
+#   (setq-default mode-line-format
+# 		(quote
+# 		 (
+# 		  "  "
+# 		  mode-line-buffer-identification
+# 		  ""		  
+# 		  )))
+#   (setq-default header-line-format nil)
 
-#+end_src
+# #+end_src
 
 ** use powerline
 ** use doom modeline
 Comment customize modeline if using this.
 
-# #+begin_src emacs-lisp
-#   (use-package doom-modeline
-#     :ensure t
-#     :init (doom-modeline-mode 1))
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
 
-#   (setq doom-modeline-vcs-max-length 12)
-# #+end_src
+  (setq doom-modeline-vcs-max-length 12)
+#+end_src
 
 ** save sesions between launches
 
@@ -565,29 +565,35 @@ Slightly modified code from ref
   ;;   :hook (company-mode . company-box-mode))
 #+end_src
 
-* lsp
+* lsp, python 
+** flycheck
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init (global-flycheck-mode))
+#+end_src
+
 ** lsp-mode
 #+begin_src emacs-lisp
-
-    ;; -----------------------
-    ;; ------- LSP-mode ------
-    ;; -----------------------
-    (require 'lsp-mode)
-
     (use-package lsp-mode
       :diminish LSP " λσπ"
       :init
       (setq lsp-keymap-prefix "C-c l")
+      (setq lsp-headerline-breadcrumb-icons-enable t)
       (setq lsp-headerline-breadcrumb-mode '(project file symbols))
       :config
       (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-      :hook ((lsp-mode . lsp-enable-which-key-integration)))
+      :hook ((lsp-mode . lsp-enable-which-key-integration)
+	     (python-mode . lsp)))
 
     (use-package lsp-ui
       :config
       (setq lsp-ui-sideline-show-hover t)
       (setq lsp-ui-sideline-show-diagnostics t)
-      (setq lsp-ui-doc-enable t))
+      (setq lsp-ui-sideline-show-code-actions t)
+      (setq lsp-ui-doc-enable t)
+      (setq lsp-ui-doc-show-with-cursor t))
+#+end_src
 
     (use-package lsp-jedi
       :ensure t
@@ -595,7 +601,7 @@ Slightly modified code from ref
 			   (require 'lsp-jedi)
 			   (lsp))))
 
-#+end_src
+
 
     :config
     (with-eval-after-load "lsp-mode"
@@ -629,6 +635,135 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 
 #+begin_src emacs-lisp
   (setq read-process-output-max (* 1024 1024))
+#+end_src
+
+** treemacs
+#+begin_src emacs-lisp
+    (use-package treemacs
+    :ensure t
+    :defer t
+    :init
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :config
+    (progn
+      (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+	    treemacs-deferred-git-apply-delay        0.5
+	    treemacs-directory-name-transformer      #'identity
+	    treemacs-display-in-side-window          t
+	    treemacs-eldoc-display                   'simple
+	    treemacs-file-event-delay                2000
+	    treemacs-file-extension-regex            treemacs-last-period-regex-value
+	    treemacs-file-follow-delay               0.2
+	    treemacs-file-name-transformer           #'identity
+	    treemacs-follow-after-init               t
+	    treemacs-expand-after-init               t
+	    treemacs-find-workspace-method           'find-for-file-or-pick-first
+	    treemacs-git-command-pipe                ""
+	    treemacs-goto-tag-strategy               'refetch-index
+	    treemacs-header-scroll-indicators        '(nil . "^^^^^^")
+	    treemacs-hide-dot-git-directory          t
+	    treemacs-indentation                     2
+	    treemacs-indentation-string              " "
+	    treemacs-is-never-other-window           nil
+	    treemacs-max-git-entries                 5000
+	    treemacs-missing-project-action          'ask
+	    treemacs-move-forward-on-expand          nil
+	    treemacs-no-png-images                   nil
+	    treemacs-no-delete-other-windows         t
+	    treemacs-project-follow-cleanup          nil
+	    treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+	    treemacs-position                        'left
+	    treemacs-read-string-input               'from-child-frame
+	    treemacs-recenter-distance               0.1
+	    treemacs-recenter-after-file-follow      nil
+	    treemacs-recenter-after-tag-follow       nil
+	    treemacs-recenter-after-project-jump     'always
+	    treemacs-recenter-after-project-expand   'on-distance
+	    treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
+	    treemacs-project-follow-into-home        nil
+	    treemacs-show-cursor                     nil
+	    treemacs-show-hidden-files               t
+	    treemacs-silent-filewatch                nil
+	    treemacs-silent-refresh                  nil
+	    treemacs-sorting                         'alphabetic-asc
+	    treemacs-select-when-already-in-treemacs 'move-back
+	    treemacs-space-between-root-nodes        t
+	    treemacs-tag-follow-cleanup              t
+	    treemacs-tag-follow-delay                1.5
+	    treemacs-text-scale                      nil
+	    treemacs-user-mode-line-format           nil
+	    treemacs-user-header-line-format         nil
+	    treemacs-wide-toggle-width               70
+	    treemacs-width                           35
+	    treemacs-width-increment                 1
+	    treemacs-width-is-initially-locked       t
+	    treemacs-workspace-switch-cleanup        nil)
+
+      ;; The default width and height of the icons is 22 pixels. If you are
+      ;; using a Hi-DPI display, uncomment this to double the icon size.
+      ;;(treemacs-resize-icons 44)
+
+      (treemacs-follow-mode t)
+      (treemacs-filewatch-mode t)
+      (treemacs-fringe-indicator-mode 'always)
+      (when treemacs-python-executable
+	(treemacs-git-commit-diff-mode t))
+
+      (pcase (cons (not (null (executable-find "git")))
+		   (not (null treemacs-python-executable)))
+	(`(t . t)
+	 (treemacs-git-mode 'deferred))
+	(`(t . _)
+	 (treemacs-git-mode 'simple)))
+
+      (treemacs-hide-gitignored-files-mode nil))
+    :bind
+    (:map global-map
+	  ("M-0"       . treemacs-select-window)
+	  ("C-x t 1"   . treemacs-delete-other-windows)
+	  ("C-x t t"   . treemacs)
+	  ("C-x t d"   . treemacs-select-directory)
+	  ("C-x t B"   . treemacs-bookmark)
+	  ("C-x t C-t" . treemacs-find-file)
+	  ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-evil
+    :after (treemacs evil)
+    :ensure t)
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t)
+
+  (use-package treemacs-icons-dired
+    :hook (dired-mode . treemacs-icons-dired-enable-once)
+    :ensure t)
+
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :ensure t)
+
+  (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+    :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+    :ensure t
+    :config (treemacs-set-scope-type 'Perspectives))
+
+  (use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
+    :after (treemacs)
+    :ensure t
+    :config (treemacs-set-scope-type 'Tabs))
+
+  (use-package lsp-treemacs
+    :after (treemacs)
+    :ensure t
+    :config (lsp-treemacs-sync-mode 1))
+  
+#+end_src
+
+** all the icons
+#+begin_src emacs-lisp
+  (use-package all-the-icons)
 #+end_src
 
 * eglot

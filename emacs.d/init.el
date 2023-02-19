@@ -1,6 +1,7 @@
 (require 'package)
 (package-initialize)
 
+
 ;; ensure custom does not modify this file
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
@@ -11,6 +12,7 @@
 ;; load package repositories
 (add-to-list 'package-archives
              '("melpa" . "https://stable.melpa.org/packages/") t)
+(package-refresh-contents)
 
 ;; load the actual config
 (require 'org)
