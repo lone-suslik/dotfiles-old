@@ -97,15 +97,12 @@
    (setq-default c-basic-offset 4)
 #+end_src
 
-** hide menu bar and toolbar
+** hide menu bar, toolbar and scrollbar
 #+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; ------ Remove top bar
-  ;; ---------------------
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
+  (add-hook 'server-after-make-frame-hook (lambda () (toggle-scroll-bar -1)))
 #+end_src
 
 ** set custom emacs backup locations
