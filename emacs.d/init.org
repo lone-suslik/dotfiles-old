@@ -1,52 +1,53 @@
 * emacs
 ** package: refresh package content on load
+
 #+begin_src emacs-lisp
   (when (not package-archive-contents)
     (package-refresh-contents))
 #+end_src
 
 ** set default frame size when opened in a window-system
+
 #+begin_src emacs-lisp
   (when window-system (set-frame-size (selected-frame) 80 47))
   (when window-system (set-frame-position (selected-frame) 40 30))
 #+end_src
 
 ** rebind C-h ahd help-command
+
 #+begin_src emacs-lisp
   (keyboard-translate ?\C-h ?\C-?) ;; some basic keyboard stuff, don't remove (written by Petr on 24 of June, 2019)
-
-  ;; remap help command
   (global-set-key [?\C-x ?h] 'help-command)
 #+end_src
 
 ** inhibit startup screen
+
 #+begin_src emacs-lisp
-  ;; No startup screen
   (setq inhibit-startup-screen t)
 #+end_src
 
 ** inhibit startup message
+
 #+begin_src emacs-lisp
-  ;; No startup message
   (setq inhibit-startup-message t)
   (setq inhibit-startup-echo-area-message t)
 #+end_src
 
 ** remove default message in scratch buffer
+
 #+begin_src emacs-lisp
-  ;; No message in scratch buffer
   (setq initial-scratch-message nil)
 #+end_src
 
 ** change yes/no into y/n for answering yes/no questions
+
 #+begin_src emacs-lisp
-  ;; y/n for answering yes/no questions
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
 ** use GNU ls on darwin for dired
+
 #+begin_src emacs-lisp
-  ;; use real ls on darwin for dired
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired t
 	  insert-directory-program "/usr/local/bin/gls"
@@ -54,50 +55,37 @@
 #+end_src
 
 ** enable linum mode by default
+
 #+begin_src emacs-lisp
-  ;; fix line numbers
   (global-linum-mode t)
   (setq linum-format "%4d  ")
-
 #+end_src
 
 ** follow symlinks without asking
 
 #+begin_src emacs-lisp
-  ;; (setq vc-follow-symlinks nil)
   (setq vc-follow-symlinks t)
   (setq vc-handled-backends nil)
 #+end_src
 
-** remove messages buffer
-#+begin_src emacs-lisp
-
-  ;; removes *messages* from the buffer
-  ;; (setq-default message-log-max nil)
-  ;; (kill-buffer "*Messages*")
-
-#+end_src
-
 ** remove completions from buffer list
+
 #+begin_src emacs-lisp
-  ;; Removes *Completions* from buffer
   (add-hook 'minibuffer-exit-hook
 	    '(lambda ()
 	       (let ((buffer "*Completions*"))
 		 (and (get-buffer buffer)
 		      (kill-buffer buffer)))))
-
-  ;;;
-  ;; (global-set-key (kbd "M-o") 'ace-window)
-
 #+end_src
 
 ** use 4 characters as default offset for c
+
 #+begin_src emacs-lisp  
    (setq-default c-basic-offset 4)
 #+end_src
 
 ** hide menu bar, toolbar and scrollbar
+
 #+begin_src emacs-lisp
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -110,10 +98,6 @@ This code blocks stores backup files (usually files ending with ~ or
 files surrounded by #) in a specified directory
 
 #+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; ------ EMACS Backups
-  ;; --------------------
   (setq backup-directory-alist `(("." . "~/.emacs_backups")))
   (setq backup-by-copying t)
   (setq delete-old-versions t
@@ -122,34 +106,9 @@ files surrounded by #) in a specified directory
     version-control t)
   (setq auto-save-file-name-transforms
     `((".*" "~/.emacs_autosaves/" t)))
-
 #+end_src
 
-** customize modeline
-# #+begin_src emacs-lisp
-#   ;;;;;;;;;;;;;;;;;;;;;;;;
-#   ;;;;;;; modeline ;;;;;;;
-#   ;;;;;;;;;;;;;;;;;;;;;;;;
-#   (require 'diminish)
-#   (eval-after-load "projectile" '(diminish 'projectile-mode " 󰑣"))
-#   (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
-#   (eval-after-load "company" '(diminish 'company-mode " c"))
-#   (diminish 'visual-line-mode " λ")
-
-#   (setq-default mode-line-format
-# 		(quote
-# 		 (
-# 		  "  "
-# 		  mode-line-buffer-identification
-# 		  ""		  
-# 		  )))
-#   (setq-default header-line-format nil)
-
-# #+end_src
-
-** use powerline
 ** use doom modeline
-Comment customize modeline if using this.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
@@ -157,39 +116,6 @@ Comment customize modeline if using this.
     :init (doom-modeline-mode 1))
 
   (setq doom-modeline-vcs-max-length 12)
-#+end_src
-
-** save sesions between launches
-
-#+begin_src emacs-lisp
-
-  ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; ;;          Save sessions between launches          ;;
-  ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  ;; (setq desktop-dirname         "~/.emacs.d/desktop/"
-  ;;       desktop-base-file-name      "emacs.desktop"
-  ;;       desktop-load-locked-desktop nil
-  ;;       desktop-auto-save-timeout   30)
-
-  ;; (setq desktop-path (list "~/.emacs.d/desktop/"))
-  ;; (setq desktop-dirname "~/.emacs.d/desktop/")
-  ;; (setq desktop-restore-eager 5)
-  ;; (setq desktop-load-locked-desktop t)
-
-
-  ;; (setq desktop-path (list "~/.emacs.d/desktop/"))
-  ;; (defconst my-savefile-dir (expand-file-name "savefile" user-emacs-directory))  ;; from https://old.reddit.com/r/emacs/comments/aoof3m/can_i_disable_asking_to_save_directory_for_desktop/
-
-  ;; (desktop-save-mode 1)
-  ;; (desktop-read)
-
-  ;; ;; Initial buffer
-  ;; (setq initial-buffer-choice nil)
-
-  ;; ;; Text mode is initial mode
-  ;; (setq initial-major-mode 'org-mode)
-
 #+end_src
 
 ** switching eng-ru in the background
@@ -207,26 +133,21 @@ Comment customize modeline if using this.
 
 * theming / custom
 ** set theme
+
 #+begin_src emacs-lisp   
    (load-theme 'monokai t)
 #+end_src
 
 ** set font
+
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist
 	       '(font . "Hasklug Nerd Font-15"))
 #+end_src
 
 * citar
+
 #+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; -- CITAR citations --
-  ;; ---------------------
-  ;;(add-to-list 'load-path "/Users/kqql397/Downloads/citar")
-  ;;(load "citar")
-  ;;(load "citar-citeproc")
-
   (use-package citar
     :custom
     (org-cite-global-bibliography '("~/documents/org/library.bib"))    
@@ -273,7 +194,6 @@ Comment customize modeline if using this.
 ** org-mode keybindings
 
 #+begin_src emacs-lisp
-  ;; setup keys
   (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c t") 'org-insert-structure-template)
@@ -302,12 +222,13 @@ Comment customize modeline if using this.
 #+end_src
 
 ** configure Babel languages
+
 #+begin_src emacs-lisp
   (org-babel-do-load-languages
-  'org-babel-load-languages
-  '((R . t)
-    (emacs-lisp . nil)
-    (python . t)))
+   'org-babel-load-languages
+   '((R . t)
+     (emacs-lisp . nil)
+     (python . t)))
 #+end_src
 
 ** allow images in emacs buffer
@@ -318,7 +239,6 @@ Comment customize modeline if using this.
 #+end_src
 
 ** change behaviour of org-goto
-
 #+begin_src emacs-lisp
   (setq org-goto-interface (quote outline-path-completion))
 #+end_src
@@ -375,15 +295,13 @@ Setup the agenda directory. I use ~/Documents/org in all my systems.
 ** org-roam
 
 #+begin_src emacs-lisp
-  ;; ---------------------
-  ;; ----- ORG-roam ------ 
-  ;; ---------------------
   (require 'org-roam)
   (setq citar-notes-paths '("~/documents/org/roam/references"))
   (setq citar-file-note-extensions '("org"))
 #+end_src
 
 *** org-roam directory & basic configs
+
 #+begin_src emacs-lisp  
   (setq org-roam-directory (file-truename "~/documents/org/roam"))
   (setq org-roam-db-location "~/documents/org/roam/roam.db")
@@ -469,6 +387,7 @@ Default option is to split screen and open the link in another window.
 #+end_src
 
 *** add 'type' propoperty and show file type in completion buffer
+
 #+begin_src emacs-lisp
   (cl-defmethod org-roam-node-type ((node org-roam-node))
     "Return the TYPE of NODE."
@@ -485,6 +404,7 @@ Default option is to split screen and open the link in another window.
 
 *** function to capture references directly from citar
 Slightly modified code from ref
+
 #+begin_src emacs-lisp
 
     (defun suslik/org-roam-node-from-cite (keys-entries)
@@ -510,6 +430,7 @@ Slightly modified code from ref
 #+end_src
 
 *** unique links in org-roam session buffer
+
 #+begin_src emacs-lisp
   (setq org-roam-mode-sections
 	'((org-roam-backlinks-section :unique t)
@@ -524,14 +445,6 @@ Slightly modified code from ref
                       ("@az" . ?a) ("@work" . ?w) ("@personal" . ?p)
                       (:endgroup . nil)
                       ("@urgent" . ?u) ("@important" . ?i)))
-#+end_src
-
-** org-journal
-
-#+begin_src emacs-lisp
-;;  (require 'org-journal)
-;;  (setq org-journal-dir "~/documents/org/org-journal/")
-;;  (setq org-journal-file-type 'monthly)
 #+end_src
 
 ** org-cite-csl-activate
@@ -564,6 +477,7 @@ Slightly modified code from ref
 
 * lsp, python 
 ** flycheck
+
 #+begin_src emacs-lisp
   (use-package flycheck
     :ensure t
@@ -592,37 +506,6 @@ Slightly modified code from ref
       (setq lsp-ui-doc-show-with-cursor t))
 #+end_src
 
-    (use-package lsp-jedi
-      :ensure t
-      :hook (python-mode . (lambda ()
-			   (require 'lsp-jedi)
-			   (lsp))))
-
-
-
-    :config
-    (with-eval-after-load "lsp-mode"
-      (add-to-list 'lsp-disabled-clients 'pyls)
-      (add-to-list 'lsp-enabled-clients 'jedi)))
-
-
-  (use-package lsp-mode
-    :diminish LSP " λσπ"
-    :init
-    ;; set prefix for lsp-command-keymap
-    (setq lsp-keymap-prefix "C-c l")
-    (setq lsp-headerline-breadcrumb-mode '(project file symbols)))
-
-  ;; (add-hook 'lsp-mode-hook #'enable-which-key-integration) ;; I am too dumb to add this to use-package (get weird errors)
-
-
-
-     ;; (use-package lsp-pyright
-     ;;   :ensure t
-     ;;   :hook (python-mode . (lambda ()
-     ;; 			 (require 'lsp-pyright)
-     ;; 			 (lsp))))  ; or lsp-deferred
-
 ** change gc settings
 Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 
@@ -635,6 +518,7 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 #+end_src
 
 ** treemacs
+
 #+begin_src emacs-lisp
     (use-package treemacs
     :ensure t
@@ -759,50 +643,13 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 #+end_src
 
 ** all the icons
+
 #+begin_src emacs-lisp
   (use-package all-the-icons)
 #+end_src
 
-* eglot
-# #+begin_src emacs-lisp
-#     (require 'eglot)
-
-#     (defgroup eglot-grammarly nil
-#       "Settings for the Grammarly Language Server.
-
-#     Link: https://github.com/znck/grammarly"
-#       :group 'eglot
-#       :link '(url-link "https://github.com/emacs-grammarly/eglot-grammarly"))
-
-#     (defcustom eglot-grammarly-active-modes
-#       '(text-mode latex-mode org-mode markdown-mode)
-#       "List of major mode that work with Grammarly."
-#       :type 'list
-#       :group 'eglot-grammarly)
-
-#     (defun eglot-grammarly--server-command ()
-#       "Generate startup command for Grammarly language server."
-#       (list 'eglot-grammarly-server "grammarly-languageserver" "--stdio"))
-
-#     (add-to-list 'eglot-server-programs
-# 		 `(,eglot-grammarly-active-modes . ,(eglot-grammarly--server-command)))
-
-#     (defclass eglot-grammarly-server (eglot-lsp-server) ()
-#       :documentation "A custom class for grammarly langserver.")
-
-#     (defconst eglot-grammarly-client-id "client_BaDkMgx4X19X9UxxYRCXZo"
-#       "Client ID is required for language server's activation.")
-
-#     (cl-defmethod eglot-initialization-options ((server eglot-grammarly-server))
-#       "Passes through required grammarly initialization options"
-# 	(list :clientId eglot-grammarly-client-id))
-
-#   (provide 'eglot-grammarly)
-#   (add-hook 'text-mode-hook (lambda ()
-#          		     (require 'eglot-grammarly)
-#           		     (call-interactively #'eglot)))
-# #+end_src
 * projectile
+
 #+begin_src emacs-lisp
   ;; ---------------------
   ;; ---- Projectile -----
@@ -818,8 +665,8 @@ Described at https://emacs-lsp.github.io/lsp-mode/page/performance/
 #+end_src
 
 * r/ess
-
-Ess nees to be installed from source:
+Ess nees to be installed from source (melpa version is too old).
+Clone into user-libraries manually.
 
 #+begin_src emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/user-libraries/ess/lisp")
@@ -839,6 +686,8 @@ Ess nees to be installed from source:
 #+end_src
 
 * snakemake
+** TODO Fix and ensure snakemake-mode works
+
 #+begin_src emacs-lisp
 
   ;; ---------------------
@@ -850,24 +699,17 @@ Ess nees to be installed from source:
 #+end_src
 
 * marginalia
+
 #+begin_src emacs-lisp
-
-  ;; ---------------------
-  ;; ---- Marginalia -----
-  ;; ---------------------
-
-  ;; Enable richer annotations using the Marginalia package
   (use-package marginalia
     :ensure t
     :config
     (marginalia-mode))
-
 #+end_src
 
 * embark
 
 #+begin_src emacs-lisp
-
   (use-package embark
     :ensure t
     :bind
@@ -889,7 +731,6 @@ Ess nees to be installed from source:
 * embark-consult
 
 #+begin_src emacs-lisp
-
   (use-package embark-consult
     :ensure t
     :after (embark consult)
@@ -902,6 +743,7 @@ Ess nees to be installed from source:
 #+end_src
 
 * orderless
+
 #+begin_src emacs-lisp
   (use-package orderless
     :ensure t
@@ -909,7 +751,6 @@ Ess nees to be installed from source:
     (setq completion-styles '(orderless basic)
 	  completion-category-defaults nil
 	  completion-category-overrides '((file (styles partial-completion)))))
-
 #+end_src
 
 * vertico
@@ -931,13 +772,11 @@ Ess nees to be installed from source:
     ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
     ;; (setq vertico-cycle t)
     )
-
 #+end_src
 
 ** preserve vertico history over emacs restarts
 
 #+begin_src emacs-lisp
-
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
     :init
@@ -964,10 +803,10 @@ Ess nees to be installed from source:
 
     ;; Enable recursive minibuffers
     (setq enable-recursive-minibuffers t))
-
 #+end_src
 
 * whichkey
+
 #+begin_src emacs-lisp
   (use-package which-key)
   (which-key-mode)
@@ -988,14 +827,9 @@ This package enables an undo tree.
   (define-key vundo-mode-map (kbd "i") #'vundo-previous)
   (define-key vundo-mode-map (kbd "k") #'vundo-next)
   (define-key vundo-mode-map (kbd "q") #'vundo-quit)
-
-
-
-
 #+end_src
 
 * keymap
-
 This is a weird and a very personal key-binding that binds
 M-<ijkl> keys to navigation (similar to wasd but for the right hand).
 
@@ -1012,6 +846,8 @@ add paragraph navigation to M- ... keys
 #+end_src
 
 * disabled
+This is a dump for old disabled config snippets
+
 ** make org use symbols instead of bullets
 
 # #+begin_src emacs-lisp
@@ -1117,3 +953,114 @@ add paragraph navigation to M- ... keys
 
 #+end_src
 
+** remove messages buffer
+#+begin_src emacs-lisp
+
+  ;; removes *messages* from the buffer
+  ;; (setq-default message-log-max nil)
+  ;; (kill-buffer "*Messages*")
+
+#+end_src
+
+** customize modeline
+# #+begin_src emacs-lisp
+#   ;;;;;;;;;;;;;;;;;;;;;;;;
+#   ;;;;;;; modeline ;;;;;;;
+#   ;;;;;;;;;;;;;;;;;;;;;;;;
+#   (require 'diminish)
+#   (eval-after-load "projectile" '(diminish 'projectile-mode " 󰑣"))
+#   (eval-after-load "flycheck" '(diminish 'flycheck-mode " φ"))
+#   (eval-after-load "company" '(diminish 'company-mode " c"))
+#   (diminish 'visual-line-mode " λ")
+
+#   (setq-default mode-line-format
+# 		(quote
+# 		 (
+# 		  "  "
+# 		  mode-line-buffer-identification
+# 		  ""		  
+# 		  )))
+#   (setq-default header-line-format nil)
+
+# #+end_src
+
+** save sesions between launches
+
+#+begin_src emacs-lisp
+
+  ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; ;;          Save sessions between launches          ;;
+  ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; (setq desktop-dirname         "~/.emacs.d/desktop/"
+  ;;       desktop-base-file-name      "emacs.desktop"
+  ;;       desktop-load-locked-desktop nil
+  ;;       desktop-auto-save-timeout   30)
+
+  ;; (setq desktop-path (list "~/.emacs.d/desktop/"))
+  ;; (setq desktop-dirname "~/.emacs.d/desktop/")
+  ;; (setq desktop-restore-eager 5)
+  ;; (setq desktop-load-locked-desktop t)
+
+
+  ;; (setq desktop-path (list "~/.emacs.d/desktop/"))
+  ;; (defconst my-savefile-dir (expand-file-name "savefile" user-emacs-directory))  ;; from https://old.reddit.com/r/emacs/comments/aoof3m/can_i_disable_asking_to_save_directory_for_desktop/
+
+  ;; (desktop-save-mode 1)
+  ;; (desktop-read)
+
+  ;; ;; Initial buffer
+  ;; (setq initial-buffer-choice nil)
+
+  ;; ;; Text mode is initial mode
+  ;; (setq initial-major-mode 'org-mode)
+
+#+end_src
+
+** org-journal
+
+#+begin_src emacs-lisp
+;;  (require 'org-journal)
+;;  (setq org-journal-dir "~/documents/org/org-journal/")
+;;  (setq org-journal-file-type 'monthly)
+#+end_src
+
+** eglot
+# #+begin_src emacs-lisp
+#     (require 'eglot)
+
+#     (defgroup eglot-grammarly nil
+#       "Settings for the Grammarly Language Server.
+
+#     Link: https://github.com/znck/grammarly"
+#       :group 'eglot
+#       :link '(url-link "https://github.com/emacs-grammarly/eglot-grammarly"))
+
+#     (defcustom eglot-grammarly-active-modes
+#       '(text-mode latex-mode org-mode markdown-mode)
+#       "List of major mode that work with Grammarly."
+#       :type 'list
+#       :group 'eglot-grammarly)
+
+#     (defun eglot-grammarly--server-command ()
+#       "Generate startup command for Grammarly language server."
+#       (list 'eglot-grammarly-server "grammarly-languageserver" "--stdio"))
+
+#     (add-to-list 'eglot-server-programs
+# 		 `(,eglot-grammarly-active-modes . ,(eglot-grammarly--server-command)))
+
+#     (defclass eglot-grammarly-server (eglot-lsp-server) ()
+#       :documentation "A custom class for grammarly langserver.")
+
+#     (defconst eglot-grammarly-client-id "client_BaDkMgx4X19X9UxxYRCXZo"
+#       "Client ID is required for language server's activation.")
+
+#     (cl-defmethod eglot-initialization-options ((server eglot-grammarly-server))
+#       "Passes through required grammarly initialization options"
+# 	(list :clientId eglot-grammarly-client-id))
+
+#   (provide 'eglot-grammarly)
+#   (add-hook 'text-mode-hook (lambda ()
+#          		     (require 'eglot-grammarly)
+#           		     (call-interactively #'eglot)))
+# #+end_src
