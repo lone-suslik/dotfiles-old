@@ -11,7 +11,7 @@
 
 ;; load package repositories
 (add-to-list 'package-archives
-             '("melpa" . "https://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-refresh-contents)
 
 ;; load the actual config
